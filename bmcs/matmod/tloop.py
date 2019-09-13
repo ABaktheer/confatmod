@@ -101,9 +101,9 @@ class TLoop(HasTraits):
                 step_flag = 'corrector'
 
             if k >= self.k_max:
-                print ' ----------> No Convergence any more'
+                print(' ----------> No Convergence any more')
                 break
-            print t_n1
+            print(t_n1)
             # print 'K=', k
             t_n = t_n1
             # for i in range(1 ,len(D_record)):
@@ -113,6 +113,7 @@ class TLoop(HasTraits):
             # print'D_record=',D_record
         return (U_record, F_record, sf_record, np.array(t_record),
                 eps_record, sig_record, w_record, D_record)
+
 
 if __name__ == '__main__':
 

@@ -3,9 +3,6 @@ Created on 12.01.2016
 @author: ABaktheer
 '''
 from ibvpy.api import BCDof
-
-#from bmcs import BCDof
-
 from mathkit.matrix_la.sys_mtx_assembly import SysMtxAssembly
 from traits.api import HasTraits, Instance, \
     Property, cached_property, Float, List
@@ -16,6 +13,7 @@ from mats_bondslip_fatigue import MATSEvalFatigue
 import numpy as np
 
 
+#from bmcs import BCDof
 class TStepper(HasTraits):
 
     '''Time stepper object for non-linear Newton-Raphson solver.

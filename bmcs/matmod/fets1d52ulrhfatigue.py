@@ -4,10 +4,11 @@ Created on 12.01.2016
 @author: Yingxiong
 '''
 
-import numpy as np
-from ibvpy.fets.fets_eval import FETSEval , IFETSEval
-from traits.api import implements, Int, Array, \
+from ibvpy.fets.fets_eval import FETSEval, IFETSEval
+from traits.api import Int, Array, \
     Property, cached_property, Float
+
+import numpy as np
 
 
 class FETS1D52ULRHFatigue(FETSEval):
@@ -16,7 +17,7 @@ class FETS1D52ULRHFatigue(FETSEval):
     Fe Bar 2 nodes, deformation
     '''
 
-    implements(IFETSEval)
+    # implements(IFETSEval)
 
     debug_on = True
 

@@ -5,7 +5,7 @@ Created on 12.01.2016
 
 #import math
 
-from ibvpy.api import BCDof
+#from ibvpy.api import BCDof
 from matplotlib.figure import Figure
 from scipy.interpolate import interp1d
 from traits.api import \

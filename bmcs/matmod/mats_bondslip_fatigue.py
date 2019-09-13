@@ -5,7 +5,7 @@ Created on 05.12.2016
 '''
 
 from scipy.optimize import newton
-from traits.api import implements, Int, Array, HasTraits, Instance, \
+from traits.api import Int, Array, HasTraits, Instance, \
     Property, cached_property, Constant, Float, List
 
 import numpy as np
@@ -202,12 +202,12 @@ class MATSEvalFatigue(HasTraits):
                 xs_pi_i = xs_pi_i + delta_lamda * \
                     np.sign(tau_i_1 - X_i) / (1 - w_i)
 
-                delta_xs_pi_i =  delta_lamda * \
+                delta_xs_pi_i = delta_lamda * \
                     np.sign(tau_i_1 - X_i) / (1 - w_i)
 
                 Y_i = 0.5 * self.E_b * (s_i - xs_pi_i) ** 2
 
-                delta_w_i  = ((1 - w_i) ** self.c) * \
+                delta_w_i = ((1 - w_i) ** self.c) * \
                     (delta_lamda * (Y_i / self.S) ** self.r)
 
                 w_i = w_i + ((1 - w_i) ** self.c) * \
