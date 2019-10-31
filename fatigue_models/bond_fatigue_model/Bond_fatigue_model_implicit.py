@@ -4,9 +4,14 @@ Created on 14.11.2016
 @author: abaktheer
 '''
 
+
+import scipy
+from scipy.linalg import \
+    eigh
+
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.optimize import newton, bisect
+import scipy.optimize as opt
 
 
 def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
@@ -96,8 +101,8 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
                 return w_n - w_i - a1 * a3 * ((1.0 - w_n)**c) * (((E_b**2) / (4 * S))**r) * (s_i - s_pi_i - a3 * a2 / (1.0 - w_n))**(2 * r)
 
             print(f_w_n(w_n))
-            #w_n = newton(f_w_n, 0.0,  tol=1.0e-10, maxiter=100)
-            w_n = bisect(f_w_n, 0.0, 0.99, xtol=1e-8, maxiter=100)
+            w_n = opt.newton(f_w_n, 0.0,  tol=1.0e-10, maxiter=100)
+            #w_n = sp.bisect(f_w_n, 0.0, 0.99, xtol=1e-8, maxiter=100)
 
             w_i = w_n
             print(f_w_n(w_i))

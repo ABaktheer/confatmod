@@ -214,7 +214,7 @@ if __name__ == '__main__':
 
     # Check the model behavior
     n = 500
-    s_levels = linspace(0,  0.001, 10)
+    s_levels = linspace(0,  0.001, 20)
     s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] *= -1
     s_history_1 = s_levels.flatten()
@@ -239,28 +239,21 @@ if __name__ == '__main__':
 
     s_arr_1, sigma_arr_1, eps_N_p_arr_1, w_N_arr_1 = get_CP_TD_Law(
         s_arr_1, sigma_0=20, K=0.0, gamma=0.0, E=34000, eps_0=1.0e-4, Ad=20000, m=0.0, a=0.0)
-#     s_arr_2, sigma_arr_2, eps_N_p_arr_2, w_N_arr_2 = get_CP_TD_Law(
-#         s_arr_2, sigma_0=20, K=10.0, gamma=10000.0, E=34000, eps_0=1.0e-4, Ad=10000, m=0.0, a=-0.05)
-#     s_arr_3, sigma_arr_3, eps_N_p_arr_3, w_N_arr_3 = get_CP_TD_Law(
-#         s_arr_3, sigma_0=20, K=10.0, gamma=10000.0, E=34000, eps_0=1.0e-4, Ad=7000, m=0.0, a=-0.1)
-#     s_arr_4, sigma_arr_4, eps_N_p_arr_4, w_N_arr_4 = get_CP_TD_Law(
-#         s_arr_2, sigma_0=20, K=10.0, gamma=10000.0, E=34000, eps_0=1.0e-4, Ad=5000, m=0.0, a=-0.2)
-#     s_arr_5, sigma_arr_5, eps_N_p_arr_5, w_N_arr_5 = get_CP_TD_Law(
-# s_arr_2, sigma_0=20, K=10.0, gamma=10000.0, E=34000, eps_0=1.0e-4,
-# Ad=4000, m=0.0, a=0.0)
 
-    ax2 = plt.subplot(111)
+    ax2 = plt.subplot(221)
     ax2.plot(s_arr_1, sigma_arr_1, color='k', label='Ad=20000')
-#     ax2.plot(s_arr_2, sigma_arr_2, color='r', label='Ad=10000')
-#     ax2.plot(s_arr_3, sigma_arr_3, color='g', label='Ad=7000')
-#     ax2.plot(s_arr_4, sigma_arr_4, color='b', label='Ad=5000')
-#     ax2.plot(s_arr_5, sigma_arr_5, color='y', label='Ad=4000')
 
     ax2.fill_between(s_arr_1, sigma_arr_1, facecolor='gray', alpha=0.2)
-#     ax2.fill_between(s_arr_2, sigma_arr_2, facecolor='gray', alpha=0.2)
-#     ax2.fill_between(s_arr_3, sigma_arr_3, facecolor='gray', alpha=0.2)
-#     ax2.fill_between(s_arr_4, sigma_arr_4, facecolor='gray', alpha=0.2)
-#     ax2.fill_between(s_arr_5, sigma_arr_5, facecolor='gray', alpha=0.2)
+
+    ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
+    ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
+    plt.title('Normal behavior (CP,TD) - monotonic')
+    plt.xlabel('strain')
+    plt.ylabel('stress(MPa)')
+    plt.legend(loc=2)
+
+    ax2 = plt.subplot(222)
+    ax2.plot(s_arr_1, w_N_arr_1, color='k', label='Ad=20000')
 
     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)

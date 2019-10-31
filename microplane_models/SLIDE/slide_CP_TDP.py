@@ -7,7 +7,7 @@ Created on 07.04.2017
 from numpy import \
     zeros_like, sign, linspace, hstack, fabs
 
-from scipy.optimize import newton
+#from scipy.optimize import newton
 
 import matplotlib.pyplot as plt
 

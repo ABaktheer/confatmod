@@ -4,7 +4,7 @@ Created on 14.11.2016
 @author: abaktheer
 '''
 
-from scipy.optimize import newton
+#from scipy.optimize import newton
 
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
