@@ -107,15 +107,20 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
             (2.0 * w_i * eps_1_i * eps_2_i + 4.0 * w_i *
              eps_2_i**2.0) + 4.0 * beta * w_i * eps_2_i**2.0
 
-        if w_i > 5.0:
+#         if w_i > 5.0:
+#             print(' ----------> No Convergence any more')
+#             print(i)
+#             break
+        
+        if d_w  > 0.5:
             print(' ----------> No Convergence any more')
             print(i)
             break
 
-        if abs(eps_1_i) > 0.005:
-            print(' ----------> No Convergence any more')
-            print(i)
-            break
+#         if abs(eps_1_i) > 0.005:
+#             print(' ----------> No Convergence any more')
+#             print(i)
+#             break
 
         eps_1_arr[i] = eps_1_i
         eps_2_arr[i] = eps_2_i
@@ -129,15 +134,16 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
 
 if __name__ == '__main__':
 
-    m = 500  # number of increments in each cycle
+    m = 50  # number of increments in each cycle
 
-    n1 = 500
-    n2 = 1000
+    n1 = 200000
+    n2 = 1
 
-    sigma_u = - 120
+    #sigma_u = - 120
+    sigma_u = - 80
 
-    stress_level_1_max = 0.80 * sigma_u
-    stress_level_2_max = 0.90 * sigma_u
+    stress_level_1_max = 0.85 * sigma_u
+    stress_level_2_max = 0.85 * sigma_u
 
     stress_level_1_min = 0.2 * sigma_u
     stress_level_2_min = 0.2 * sigma_u
@@ -164,10 +170,10 @@ if __name__ == '__main__':
 
     #================================================================
 
-    # C120
-    sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(
-        sigma_arr, lamda=12500, mu=18750, alpha=2237.5, beta=-2216.5, g=-10.0,
-        C0=0.00, C1=0.0019, K=0.00485, n=10)
+#     # C120
+#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(
+#         sigma_arr, lamda=12500, mu=18750, alpha=2237.5, beta=-2216.5, g=-10.0,
+#         C0=0.00, C1=0.0019, K=0.00485, n=10)
 
 #     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
 # sigma_arr, lamda=13972.2, mu=20958.3, alpha=2237.5, beta=-2216.5,
@@ -180,9 +186,13 @@ if __name__ == '__main__':
 #         C0=0.00, C1=0.0019, K=0.00485, n=10)
 
 #     # C80 - alliche paper
-#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
-# sigma_arr, lamda=10555.55, mu=15833.33, alpha=2237.5, beta=-2216.5,
-# g=-9.788, C0=0.00, C1=0.002033, K=0.003345, n=10)
+#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr,  D_arr, inc, phi_arr = get_stress_strain(
+#         sigma_arr, lamda=10555.55, mu=15833.33, alpha=2237.5, beta=-2216.5, g=-9.788, C0=0.00, C1=0.002033, K=0.003345, n=10)
+    
+    
+    # C80 - calibration
+    sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr,  D_arr, inc, phi_arr = get_stress_strain(
+        sigma_arr, lamda=10555.55, mu=15833.33, alpha=2237.5, beta=-2216.5, g=-9.788, C0=0.00, C1=0.0020, K=0.0048, n=10)
 
     #-----------------------------------------------------------------------
     # plot 1
