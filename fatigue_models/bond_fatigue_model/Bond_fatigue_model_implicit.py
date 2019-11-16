@@ -95,14 +95,34 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
                 a2 = np.sign(tau_i_1 - gamma * alpha_i)
                 a3 = (f_pi_i / (E_b / (1.0 - w_n) + K + gamma))
 
-                # return w_n - w_i - a3 * ((1.0 - w_n)**c) * a1 * ((0.5 * E_b *
-                # (s_i - s_pi_i - a3 * a2 / (1.0 - w_n))**2.0) / S)**r
+                return w_n - w_i - a3 * ((1.0 - w_n)**c) * a1 * ((0.5 * E_b *
+                (s_i - s_pi_i - a3 * a2 / (1.0 - w_n))**2.0) / S)**r
+                
+                
+            def f_w_n_2(w_n):
 
-                return w_n - w_i - a1 * a3 * ((1.0 - w_n)**c) * (((E_b**2) / (4 * S))**r) * (s_i - s_pi_i - a3 * a2 / (1.0 - w_n))**(2 * r)
+                a1 = (tau_pi_bar / (tau_pi_bar - m * sigma_n))
+                a2 = np.sign(tau_i_1 - gamma * alpha_i)
+                a3 = (f_pi_i / (E_b / (1.0 - w_n) + K + gamma))
+
+                return   1.0/((-a2*a3 + (1.0 - w_n)*(-s_pi_i + s_i))/
+                              (1.0 - w_n))*(-2.0*a1*a2*pow(a3, 2)*r*\
+                                            pow(0.5*E_b*pow((-a2*a3 + (1.0 - w_n)*(-s_pi_i + s_i))/\
+                                            (1.0 - w_n), 2.0)/S, r)*pow(1.0 - w_n, c + 1) -\
+                                             a1*a3*c*pow((-a2*a3 + (1.0 - w_n)*(-s_pi_i + s_i))/\
+                                                         (1.0 - w_n), 1.0)*pow(0.5*E_b*pow((-a2*a3 + (1.0 - w_n)*(-s_pi_i + s_i))/\
+                                                                                           (1.0 - w_n), 2.0)/S, r)*pow(1.0 - w_n, c + 2) +\
+                                                          pow((-a2*a3 + (1.0 - w_n)*(-s_pi_i + s_i))/(1.0 - w_n), 1.0)*pow(w_n - 1.0, 3))/pow(w_n - 1.0, 3)
+
+                #-------------- return w_n - w_i - a1 * a3 * ((1.0 - w_n)**c) *\
+                    # (((E_b**2) / (4. * S))**r) * (s_i - s_pi_i - a3 * a2 / (1.0 - w_n))**(2. * r)
+                    
+                    
+                    
 
             print(f_w_n(w_n))
-            w_n = opt.newton(f_w_n, 0.0,  tol=1.0e-10, maxiter=100)
-            #w_n = sp.bisect(f_w_n, 0.0, 0.99, xtol=1e-8, maxiter=100)
+            w_n = opt.newton(f_w_n,  0.0, fprime= f_w_n_2,  tol=1.0e-8, maxiter=100, rtol=0.0)
+            #w_n = opt.bisect(f_w_n, 0.0, 0.99, xtol=1e-8, maxiter=100)
 
             w_i = w_n
             print(f_w_n(w_i))
@@ -119,9 +139,11 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
 
             tau_i = E_b * (1.0 - w_i) * (s_i - s_pi_i)
 
-            alpha_i = alpha_i + delta_lamda * \
+            alpha_i += delta_lamda * \
                 np.sign(tau_i_1 - gamma * alpha_i)
-            z_i = z_i + delta_lamda
+                
+            z_i += delta_lamda
+            
             s_pi_cum_i = s_pi_cum_i + delta_lamda / (1.0 - w_i)
 
         tau_max_i = np.fabs(tau_i)
@@ -137,7 +159,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
 
 
 if __name__ == '__main__':
-    s_levels = np.linspace(0, 0.35, 2)
+    s_levels = np.linspace(0, 0.5, 2)
     s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] *= -1
     # s_levels.reshape(-1, 2)[:, 1] = 2
@@ -155,6 +177,10 @@ if __name__ == '__main__':
 
     s_arr_4 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 100)
                          for i in range(len(s_history) - 1)])
+    
+    s_arr_5 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 200)
+                         for i in range(len(s_history) - 1)])
+
 
     s_arr_1, tau_arr_1, w_arr_1, s_pi_arr_1, s_max_1, tau_max_1, s_pi_cum_1, diss_1 = get_bond_slip(
         s_arr_1, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
@@ -167,6 +193,11 @@ if __name__ == '__main__':
 
     s_arr_4, tau_arr_4, w_arr_4, s_pi_arr_4, s_max_4, tau_max_4, s_pi_cum_4, diss_4 = get_bond_slip(
         s_arr_4, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+    
+    s_arr_5, tau_arr_5, w_arr_5, s_pi_arr_5, s_max_5, tau_max_5, s_pi_cum_5, diss_5 = get_bond_slip(
+        s_arr_5, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+    
+    
 
     ax1 = plt.subplot(221)
     ax1.plot(s_arr_1, tau_arr_1, 'b', linewidth=2,
@@ -176,6 +207,8 @@ if __name__ == '__main__':
     ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
     ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
+             label='$ \sigma_N = 20$ MPa')
+    ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
     ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
@@ -193,6 +226,9 @@ if __name__ == '__main__':
     ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
     ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
+             label='$ \sigma_N = 20$ MPa')
+    
+    ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
@@ -212,6 +248,8 @@ if __name__ == '__main__':
     plt.plot(s_pi_cum_3, w_arr_3, 'g', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
     plt.plot(s_pi_cum_4, w_arr_4, 'k', linewidth=2,
+             label='$ \sigma_N = 20$ MPa')
+    plt.plot(s_pi_cum_5, w_arr_5, 'y', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
 
     plt.xlabel('Cumulative sliding(mm)')

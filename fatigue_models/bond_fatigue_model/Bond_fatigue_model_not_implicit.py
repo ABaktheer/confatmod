@@ -74,7 +74,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, a, sigma_n):
 
         if f_pi_i > 1e-6:
             # Return mapping
-            delta_lamda = f_pi_i / (E_b / (1 - w_i) + gamma + K)
+            delta_lamda = f_pi_i / (E_b / (1. - w_i) + gamma + K)
             # update all the state variables
 
             s_pi_i = s_pi_i + delta_lamda * \
@@ -86,7 +86,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, a, sigma_n):
                 Y_i * ((1 - w_i) ** c) * (delta_lamda * (Y_i / S) ** r)
 
             w_i = w_i + ((1 - w_i) ** c) * (delta_lamda *
-                                            (Y_i / S) ** r)  # * (1 - sigma_n / (0.5 * tau_pi_bar))
+                                            (Y_i / S) ** r)  * (1 - sigma_n / (0.5 * tau_pi_bar))
 
             tau_i = E_b * (1 - w_i) * (s_i - s_pi_i)
 
@@ -108,7 +108,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, a, sigma_n):
 
 
 if __name__ == '__main__':
-    s_levels = np.linspace(0, 0.3, 2)
+    s_levels = np.linspace(0, 0.5, 2)
     s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] *= -1
     # s_levels.reshape(-1, 2)[:, 1] = 2

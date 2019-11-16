@@ -129,7 +129,7 @@ class MATSEvalMicroplaneFatigue(HasTraits):
                     enter_set=True,
                     auto_set=False)
 
-    sigma_0 = Float(15.,
+    sigma_0 = Float(1500.,
                     label="sigma_0",
                     desc="Yielding stress",
                     enter_set=True,
@@ -394,7 +394,7 @@ class MATSXDMicroplaneDamageFatigueJir(MATSEvalMicroplaneFatigue):
 
         sctx_arr = zeros_like(sctx)
 
-        sctx_N = self.get_normal_Law_2(e_N_arr, sctx)
+        sctx_N = self.get_normal_Law(e_N_arr, sctx)
         sctx_arr[:, 0:5] = sctx_N
 
         sctx_tangential = self.get_tangential_Law(e_T_vct_arr, sctx, sigma_kk)
@@ -693,14 +693,14 @@ if __name__ == '__main__':
     n_mp = model.n_mp
 
     p = 1.0  # ratio of strain eps_11 (for bi-axial loading)
-    m = 0.0  # ratio of strain eps_22 (for bi-axial loading)
+    m = -0.0  # ratio of strain eps_22 (for bi-axial loading)
 
     # monotonic loading - comp
-    n = 100  # number of increments
-    s_levels = linspace(0, -0.015, 2)
+    n = 25  # number of increments
+    s_levels = linspace(0, -0.004, 2)
     #s_levels[0] = 0
-    eps_max = -0.015
-    eps_min = -0.0003
+    eps_max = -0.004
+    eps_min = -0.0005
 
     s_levels.reshape(-1, 2)[:, 0] = eps_max
     s_levels[0] = 0

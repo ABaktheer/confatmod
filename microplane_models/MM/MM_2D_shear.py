@@ -34,7 +34,7 @@ class MATSEvalMicroplaneFatigue(HasTraits):
     # material model parameters
     #--------------------------
 
-    n_mp = 180
+    n_mp = 360
 
     E = Float(20000.,
               label="E",
@@ -430,6 +430,8 @@ class MATSXDMicroplaneDamageFatigueJir(MATSEvalMicroplaneFatigue):
 
         beta_N_arr = sqrt(1. -
                           self._get_state_variables(sctx, eps_app_eng, sigma_kk)[:, 0])
+        
+        #beta_N_arr = (1. - self._get_state_variables(sctx, eps_app_eng, sigma_kk)[:, 0])
 
         return beta_N_arr
 
@@ -585,8 +587,7 @@ class MATSXDMicroplaneDamageFatigueJir(MATSEvalMicroplaneFatigue):
         beta_ijkl = self._get_beta_tns_sum_type(
             sctx, eps_app_eng, sigma_kk)
 
-        beta_ijkl = self._get_beta_tns(
-            sctx, eps_app_eng, sigma_kk)
+        beta_ijkl = self._get_beta_tns(sctx, eps_app_eng, sigma_kk)
 
         #------------------------------------------------------------------
         # Damaged stiffness tensor calculated based on the damage tensor beta4:
@@ -617,7 +618,7 @@ class MATS2DMicroplaneDamageJir(MATSXDMicroplaneDamageFatigueJir):
     #-----------------------------------------------
     # number of microplanes
     #-----------------------------------------------
-    n_mp = Constant(180)
+    n_mp = Constant(360)
 
     #-----------------------------------------------
     # get the normal vectors of the microplanes
@@ -696,15 +697,15 @@ if __name__ == '__main__':
     m = 0.0  # ratio of strain eps_22 (for bi-axial loading)
 
     # monotonic loading - comp
-    n = 100  # number of increments
-    s_levels = linspace(0, 0.01, 2)
+    n = 25  # number of increments
+    s_levels = linspace(0, 0.01, 100)
     #s_levels[0] = 0
-    eps_max = 0.005
-    eps_min = 0.0003
+    eps_max = 0.0012
+    eps_min = 0.0002
 
     s_levels.reshape(-1, 2)[:, 0] = eps_max
     s_levels[0] = 0
-    #s_levels.reshape(-1, 2)[:, 1] = eps_min
+    s_levels.reshape(-1, 2)[:, 1] = eps_min
     s_history_1 = s_levels.flatten()
     s_arr_1 = hstack([linspace(s_history_1[i], s_history_1[i + 1], n)
                       for i in range(len(s_levels) - 1)])
@@ -839,7 +840,9 @@ if __name__ == '__main__':
 
     rads = np.arange(0, (2 * np.pi), (2 * np.pi) / n_mp)
 
+    '====================='
     'Plotting in cycles'
+    '====================='
 
     #===================
     # Tangential strain
@@ -919,8 +922,9 @@ if __name__ == '__main__':
     plt.title(' Normal damage for all microplanes')
     plt.show()
 #
-
+    '======================='
     'Plotting in increments'
+    '======================='
     #===================
     # Tangential  strain
     #===================
@@ -931,21 +935,20 @@ if __name__ == '__main__':
             einsum('...i,...i->... ', eps_T_1[i, :], eps_Pi_T_1[i, :]))
         # print(norm.shape)
         plt.polar(rads, norm)
-    plt.title(' Sliding strain for all microplanes')
+    plt.title('Tangential strain for all microplanes (magnitude)')
     plt.show()
 
+    
     #===================
-    # Tangential sliding strain
+    # cumulative sliding
     #===================
     plt.subplot(111)
     for i in range(0, len(eps_1[:, 0])):
-        # print(eps_Pi_T_1.shape)
-        norm = sqrt(
-            einsum('...i,...i->... ', eps_Pi_T_1[i, :], eps_Pi_T_1[i, :]))
-        # print(norm.shape)
-        plt.polar(rads, norm)
-    plt.title(' Sliding strain for all microplanes')
+        #plt.polar(rads, w_1_T[i, :])
+        plt.polar(rads, eps_Pi_T_1_cum[i, :])
+    plt.title('Cumulative sliding for all microplanes')
     plt.show()
+
 
     #===================
     # Tangential damage
