@@ -241,8 +241,8 @@ class HCFF(tr.HasStrictTraits):
                                             '_' + self.columns_headers_list[i] + '.npy')).flatten()
                 disp_ascending = disp[0:peak_force_before_cycles_index]
                 disp_rest = disp[peak_force_before_cycles_index:]
-                disp_ascending = savgol_filter(
-                    disp_ascending, window_length=51, polyorder=2)
+#                 disp_ascending = savgol_filter(
+#                     disp_ascending, window_length=51, polyorder=2)
                 disp_rest_filtered = disp_rest[force_max_min_indices]
                 filtered_disp = np.concatenate(
                     (disp_ascending, disp_rest_filtered))

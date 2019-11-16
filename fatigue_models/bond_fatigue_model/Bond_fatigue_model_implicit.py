@@ -5,7 +5,7 @@ Created on 14.11.2016
 '''
 
 
-import scipy
+#import scipy
 from scipy.linalg import \
     eigh
 
@@ -200,6 +200,7 @@ if __name__ == '__main__':
     
 
     ax1 = plt.subplot(221)
+<<<<<<< HEAD
     ax1.plot(s_arr_1, tau_arr_1, 'b', linewidth=2,
              label='$ \sigma_N = 0$ MPa')
     ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
@@ -256,5 +257,55 @@ if __name__ == '__main__':
     plt.ylabel('Damage')
     plt.ylim(0, 1)
     plt.legend()
+=======
+    ax1.plot(s_arr_1, tau_arr_1, 'b')
+#     ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
+#              label=' MPa')
+#     ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
+#              label=' MPa')
+#     ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
+#              label=' MPa')
+#     ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
+#     ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
+#     plt.title('Bond_slip')
+#     plt.xlabel('Slip(mm)')
+#     plt.ylabel('Stress(MPa)')
+#     plt.legend(loc=4)
+# 
+#     ax2 = plt.subplot(222)
+# 
+#     ax2.plot(s_arr_1, w_arr_1, 'b', linewidth=2,
+#              label=' MPa')
+#     ax2.plot(s_arr_2, w_arr_2, 'r', linewidth=2,
+#              label=' MPa')
+#     ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
+#              label=' MPa')
+#     ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
+#              label='MPa')
+#     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
+#     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
+#     plt.title('Damage evolution')
+#     plt.ylim(0, 1)
+#     plt.xlabel('Slip(mm)')
+#     plt.ylabel('Damage')
+#     plt.legend(loc=4)
+# 
+#     #'''
+#     plt.subplot(223)
+# 
+#     plt.plot(s_pi_cum_1, w_arr_1, 'b', linewidth=2,
+#              label=' MPa')
+#     plt.plot(s_pi_cum_2, w_arr_2, 'r', linewidth=2,
+#              label=' MPa')
+#     plt.plot(s_pi_cum_3, w_arr_3, 'g', linewidth=2,
+#              label=' MPa')
+#     plt.plot(s_pi_cum_4, w_arr_4, 'k', linewidth=2,
+#              label=' MPa')
+# 
+#     plt.xlabel('Cumulative sliding(mm)')
+#     plt.ylabel('Damage')
+#     plt.ylim(0, 1)
+#     plt.legend()
+>>>>>>> branch 'master' of https://github.com/ABaktheer/confatmod.git
 
     plt.show()
