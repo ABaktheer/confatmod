@@ -136,7 +136,7 @@ if __name__ == '__main__':
 
     m = 50  # number of increments in each cycle
 
-    n1 = 300000
+    n1 = 300
     n2 = 1
 
     sigma_u = - 95
@@ -364,12 +364,12 @@ if __name__ == '__main__':
          
     #------------------------------------------------------------------------------ 
     plt.subplot(223)
-    plt.plot(N_max_1[1:]/N_1, abs(eps_max_1[1:]/300), "k")
-    plt.plot(N_max_2[1:]/N_2, abs(eps_max_2[1:]/300), "k")
-    plt.plot(N_max_3[1:]/N_3, abs(eps_max_3[1:]/300), "k")
-    plt.plot(N_max_4[1:]/N_4, abs(eps_max_4[1:]/300), "k")
-    plt.plot(N_max_5[1:]/N_5, abs(eps_max_5[1:]/300), "k")
-    plt.plot(N_max_6[1:]/N_6, abs(eps_max_6[1:]/300), "k")
+    plt.plot(N_max_1[1:]/N_1, abs((eps_max_1[1:])/300), "k")
+    plt.plot(N_max_2[1:]/N_2, abs((eps_max_2[1:])/300), "k")
+    plt.plot(N_max_3[1:]/N_3, abs((eps_max_3[1:])/300), "k")
+    plt.plot(N_max_4[1:]/N_4, abs((eps_max_4[1:])/300), "k")
+    plt.plot(N_max_5[1:]/N_5, abs((eps_max_5[1:])/300), "k")
+    plt.plot(N_max_6[1:]/N_6, abs((eps_max_6[1:])/300), "k")
 
     plt.ylim(0.0015, 0.0045)
     plt.title('Fatigue creep curve normalized (H-L)')

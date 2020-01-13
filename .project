@@ -4,8 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>bmcs</project>
-		<project>confatigue</project>
-		<project>ibvpy</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

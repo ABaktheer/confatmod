@@ -115,20 +115,10 @@ if __name__ == '__main__':
     s_history = s_levels.flatten()
 
     # slip array as input
-    s_arr_1 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 10)
+    s_arr_1 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 100)
                          for i in range(len(s_levels) - 1)])
 
-    s_arr_2 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 20)
-                         for i in range(len(s_history) - 1)])
 
-    s_arr_3 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 30)
-                         for i in range(len(s_history) - 1)])
-
-    s_arr_4 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 40)
-                         for i in range(len(s_history) - 1)])
-    
-    s_arr_5 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 50)
-                         for i in range(len(s_history) - 1)])
 
     tau_pi_bar=1
     K=0.1
@@ -144,30 +134,12 @@ if __name__ == '__main__':
     s_arr_1, tau_arr_1, w_arr_1, s_pi_arr_1, s_max_1, tau_max_1, s_pi_cum_1, diss_1 = get_bond_slip(
         s_arr_1, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
 
-    s_arr_2, tau_arr_2, w_arr_2, s_pi_arr_2, s_max_2, tau_max_2, s_pi_cum_2, diss_2 = get_bond_slip(
-        s_arr_2, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
-
-    s_arr_3, tau_arr_3, w_arr_3, s_pi_arr_3, s_max_3, tau_max_3, s_pi_cum_3, diss_3 = get_bond_slip(
-        s_arr_3, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
-
-    s_arr_4, tau_arr_4, w_arr_4, s_pi_arr_4, s_max_4, tau_max_4, s_pi_cum_4, diss_4 = get_bond_slip(
-        s_arr_4, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
-    
-    s_arr_5, tau_arr_5, w_arr_5, s_pi_arr_5, s_max_5, tau_max_5, s_pi_cum_5, diss_5 = get_bond_slip(
-        s_arr_5, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
     
 
     ax1 = plt.subplot(221)
     ax1.plot(s_arr_1, tau_arr_1, 'b', linewidth=2,
              label='increments = 10')
-    ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
-             label='increments = 20')
-    ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
-             label='increments = 30')
-    ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
-             label='increments = 40')
-    ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
-             label='increments = 50')
+
     
     ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
@@ -180,14 +152,7 @@ if __name__ == '__main__':
 
     ax2.plot(s_arr_1, w_arr_1, 'b', linewidth=2,
              label='increments = 10')
-    ax2.plot(s_arr_2, w_arr_2, 'r', linewidth=2,
-             label='increments = 20')
-    ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
-             label='increments = 30')
-    ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
-             label='increments = 40')
-    ax2.plot(s_arr_5, w_arr_5, 'y', linewidth=2,
-             label='increments = 50')
+
     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
     plt.title('Damage evolution')
@@ -201,14 +166,7 @@ if __name__ == '__main__':
 
     plt.plot(s_pi_cum_1, w_arr_1, 'b', linewidth=2,
              label='increments = 10')
-    plt.plot(s_pi_cum_2, w_arr_2, 'r', linewidth=2,
-             label='increments = 20')
-    plt.plot(s_pi_cum_3, w_arr_3, 'g', linewidth=2,
-             label='increments = 30')
-    plt.plot(s_pi_cum_4, w_arr_4, 'k', linewidth=2,
-             label='increments = 40')
-    plt.plot(s_pi_cum_5, w_arr_5, 'y', linewidth=2,
-             label='increments = 50')
+
 
     plt.xlabel('Cumulative sliding(mm)')
     plt.ylabel('Damage')
