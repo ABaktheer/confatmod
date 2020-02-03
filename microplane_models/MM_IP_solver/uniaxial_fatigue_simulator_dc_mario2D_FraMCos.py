@@ -12,12 +12,12 @@
 # In[1]:
 
 
-from microplane_models.MM_IP_solver.Micro2Dplot import Micro2Dplot
-
+from microplane_models.MM_IP_solver.micro2Dplot import Micro2Dplot
+from microplane_models.MM_IP_solver.vmats2D_mpl_csd_eeq import MATS2DMplCSDEEQ
 
 #from bmcs.ibvpy.mats.mats2D.mats2D_microplane.vmats2D_mpl_csd_eeq import MATS2DMplCSDEEQ
 
-from bmcs.ibvpy.mats.mats2D.mats2D_microplane.vmats2D_mpl_csd_eeq import MATS2DMplCSDEEQ
+#from bmcs.ibvpy.mats.mats2D.mats2D_microplane.vmats2D_mpl_csd_eeq import MATS2DMplCSDEEQ
 
 import matplotlib.pyplot as plt
 import numpy as np
