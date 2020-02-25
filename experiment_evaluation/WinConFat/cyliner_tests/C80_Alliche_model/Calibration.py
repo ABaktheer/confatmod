@@ -134,12 +134,12 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
 
 if __name__ == '__main__':
 
-    m = 50  # number of increments in each cycle
+    m = 200  # number of increments in each cycle
 
-    n1 = 300
-    n2 = 1
+    n1 = 100000
+    n2 = 100000
 
-    sigma_u = - 95
+    sigma_u = - 99
     
     
     
@@ -198,13 +198,13 @@ if __name__ == '__main__':
 
     lamda=10555.55
     mu=15833.33 
-    alpha=2237.5 
+    alpha=2000 
     beta=-2216.5 
-    g=-9.788 
+    g=-9.8 
     C0=0.00
     C1=0.002
-    K=0.0065
-    n=10
+    K=0.005
+    n=18
     
     
     # C80 - calibration

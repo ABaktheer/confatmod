@@ -116,19 +116,18 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
                     
 
             #w_i = opt.newton(f_w_n,  0.0, fprime= f_w_n_2,  tol=1.0e-8, maxiter=20, rtol=0.0)
-            w_i = opt.newton(f_w_n,  0.0,  tol=1.0e-4, maxiter=20, rtol=0.0)
             
             k=0
-#             while  k < 500:
-#                 if abs(f_w_n(w_n)) < 1e-10:
-#                     w_i = w_n
-#                     break 
-#                 else:  
-#                     w_n = w_n - f_w_n(w_n)/f_w_n_2(w_n)
-#                     k += 1
-#             else:
-#                 print('no convergence')
-#                 break
+            while  k < 500:
+                if abs(f_w_n(w_n)) < 1e-10:
+                    w_i = w_n
+                    break 
+                else:  
+                    w_n = w_n - f_w_n(w_n)/f_w_n_2(w_n)
+                    k += 1
+            else:
+                print('no convergence')
+                break
 
             
             k_i = k

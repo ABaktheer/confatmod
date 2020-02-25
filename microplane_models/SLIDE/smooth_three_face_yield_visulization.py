@@ -49,7 +49,7 @@ for i in np.arange(0, len(m)):
 
     #plt.plot(sig_N , 20*np.heaviside((sig_N - sig_t1), 1), '--r', linewidth=2.0, alpha=1.0)
     #plt.plot(sig_N , 20*np.heaviside((sig_c - sig_N),1), '--b', linewidth=2.0, alpha=1.0)
-    plt.ylim(0,100)
+    plt.ylim(0,50)
     #plt.plot(sig_N , -f, 'k', linewidth=2, alpha=1.0)
     plt.axhline(y=0, color='k', linewidth=0.5, alpha=0.5)
     plt.axvline(x=0, color='k', linewidth=0.5, alpha=0.5)
