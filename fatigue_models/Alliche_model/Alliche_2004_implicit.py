@@ -52,7 +52,7 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
     w_i = 0.0
 
     for i in range(1, len(sigma_1_arr)):
-        print 'increment', i
+        print ('increment', i)
 
         sigma_1_i = sigma_1_arr[i]
         d_sigma_1 = sigma_1_arr[i] - sigma_1_arr[i - 1]
@@ -86,11 +86,11 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         w_arr[i] = w_n
 
         if w_i > 5.0:
-            print ' ----------> No Convergence any more'
+            print( ' ----------> No Convergence any more')
             break
 
         if abs(eps_1_i) > 0.0035:
-            print ' ----------> No Convergence any more'
+            print (' ----------> No Convergence any more')
             break
 
     return sigma_1_arr, eps_1_arr, eps_2_arr, w_arr, i

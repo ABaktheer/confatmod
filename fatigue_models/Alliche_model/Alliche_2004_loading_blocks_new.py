@@ -129,7 +129,7 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
 
 if __name__ == '__main__':
 
-    m = 10  # number of increments in each cycle
+    m = 200  # number of increments in each cycle
 
 #     n1 = 3
 #     n2 = 13
@@ -138,23 +138,23 @@ if __name__ == '__main__':
 #     n5 = 78
 #     n6 = 600
 
-    n1 = 1
-    n2 = 1
-    n3 = 1
-    n4 = 1
-    n5 = 1
-    n6 = 1
+    n1 = 10
+    n2 = 10
+    n3 = 10
+    n4 = 50
+    n5 = 50
+    n6 = 50
 
-    b = 1  # number_of_repeted_blocks
+    b = 10  # number_of_repeted_blocks
 
     sigma_u = - 120
 
-    stress_level_1_max = 0.90 * sigma_u
-    stress_level_2_max = 0.90 * sigma_u
-    stress_level_3_max = 0.90 * sigma_u
-    stress_level_4_max = 0.90 * sigma_u
-    stress_level_5_max = 0.90 * sigma_u
-    stress_level_6_max = 0.90 * sigma_u
+    stress_level_1_max = 0.85 * sigma_u
+    stress_level_2_max = 0.85 * sigma_u
+    stress_level_3_max = 0.85 * sigma_u
+    stress_level_4_max = 0.75 * sigma_u
+    stress_level_5_max = 0.75 * sigma_u
+    stress_level_6_max = 0.75 * sigma_u
 
     stress_level_1_min = 0.2 * sigma_u
     stress_level_2_min = 0.2 * sigma_u

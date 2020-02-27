@@ -134,12 +134,12 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
 
 if __name__ == '__main__':
 
-    m = 50  # number of increments in each cycle
+    m = 200  # number of increments in each cycle
 
-    n1 = 300000
-    n2 = 1
+    n1 = 100000
+    n2 = 100000
 
-    sigma_u = - 95
+    sigma_u = - 99
     
     
     
@@ -198,13 +198,13 @@ if __name__ == '__main__':
 
     lamda=10555.55
     mu=15833.33 
-    alpha=2237.5 
+    alpha=2000 
     beta=-2216.5 
-    g=-9.788 
+    g=-9.8 
     C0=0.00
     C1=0.002
-    K=0.0065
-    n=10
+    K=0.005
+    n=18
     
     
     # C80 - calibration
@@ -364,12 +364,12 @@ if __name__ == '__main__':
          
     #------------------------------------------------------------------------------ 
     plt.subplot(223)
-    plt.plot(N_max_1[1:]/N_1, abs(eps_max_1[1:]/300), "k")
-    plt.plot(N_max_2[1:]/N_2, abs(eps_max_2[1:]/300), "k")
-    plt.plot(N_max_3[1:]/N_3, abs(eps_max_3[1:]/300), "k")
-    plt.plot(N_max_4[1:]/N_4, abs(eps_max_4[1:]/300), "k")
-    plt.plot(N_max_5[1:]/N_5, abs(eps_max_5[1:]/300), "k")
-    plt.plot(N_max_6[1:]/N_6, abs(eps_max_6[1:]/300), "k")
+    plt.plot(N_max_1[1:]/N_1, abs((eps_max_1[1:])/300), "k")
+    plt.plot(N_max_2[1:]/N_2, abs((eps_max_2[1:])/300), "k")
+    plt.plot(N_max_3[1:]/N_3, abs((eps_max_3[1:])/300), "k")
+    plt.plot(N_max_4[1:]/N_4, abs((eps_max_4[1:])/300), "k")
+    plt.plot(N_max_5[1:]/N_5, abs((eps_max_5[1:])/300), "k")
+    plt.plot(N_max_6[1:]/N_6, abs((eps_max_6[1:])/300), "k")
 
     plt.ylim(0.0015, 0.0045)
     plt.title('Fatigue creep curve normalized (H-L)')
