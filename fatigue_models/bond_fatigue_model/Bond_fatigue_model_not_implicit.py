@@ -94,6 +94,11 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, a, sigma_n):
                 np.sign(tau_i_1 - gamma * alpha_i)
             z_i = z_i + delta_lamda
             s_pi_cum_i = s_pi_cum_i + delta_lamda / (1 - w_i)
+            
+            f_pi = np.fabs(tau_i/(1.0 - w_i) - gamma * alpha_i) - \
+            tau_pi_bar - K * z_i + a* sigma_n
+            
+            print('f_pi=', f_pi)
 
         tau_max_i = np.fabs(tau_i)
         tau_arr[i] = tau_i

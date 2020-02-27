@@ -59,15 +59,15 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
     #================================================
     # state variables
     #================================================
-    tau_i = 0
-    alpha_i = 0.
-    s_pi_i = 0
-    z_i = 0.
-    w_i = 0.
+    tau_i = 0.0
+    alpha_i = 0.0
+    s_pi_i = 0.0
+    z_i = 0.0
+    w_i = 0.0
     w_n = 0.0
-    delta_lamda = 0
-    s_pi_cum_i = 0
-    diss_i = 0
+    delta_lamda = 0.0
+    s_pi_cum_i = 0.0
+    diss_i = 0.0
 
     for i in range(1, len(s_arr)):
         print('increment', i)
@@ -78,7 +78,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
 
         tau_i_1 = E_b * (s_i - s_pi_i)
 
-        Y_i = 0.5 * E_b * (s_i - s_pi_i) ** 2
+        Y_i = 0.5 * E_b * (s_i - s_pi_i) ** 2.0
 
         # Threshold
         f_pi_i = np.fabs(tau_i_1 - gamma * alpha_i) - \
@@ -114,29 +114,31 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
                                                                                            (1.0 - w_n), 2.0)/S, r)*pow(1.0 - w_n, c + 2) +\
                                                           pow((-a2*a3 + (1.0 - w_n)*(-s_pi_i + s_i))/(1.0 - w_n), 1.0)*pow(w_n - 1.0, 3))/pow(w_n - 1.0, 3)
 
-                #-------------- return w_n - w_i - a1 * a3 * ((1.0 - w_n)**c) *\
-                    # (((E_b**2) / (4. * S))**r) * (s_i - s_pi_i - a3 * a2 / (1.0 - w_n))**(2. * r)
-                    
-                    
-                    
 
-            print(f_w_n(w_n))
+
             w_n = opt.newton(f_w_n,  0.0, fprime= f_w_n_2,  tol=1.0e-8, maxiter=100, rtol=0.0)
             #w_n = opt.bisect(f_w_n, 0.0, 0.99, xtol=1e-8, maxiter=100)
-
+            
+            
+            print('w_n (before)', w_n)
+            print('f_w_n (before)', f_w_n(w_n))
             w_i = w_n
-            print(f_w_n(w_i))
+            #w_i = opt.newton(f_w_n,  0.0,  tol=1.0e-8, maxiter=100, rtol=0.0)
+            print('w_i (after)', w_i)
+            print('f_w_n (after)', f_w_n(w_i))
+            
+            tau_i_1 = E_b * (s_i - s_pi_i)
+            
+            f_pi_i = np.fabs(tau_i_1 - gamma * alpha_i) - \
+            tau_pi_bar - K * z_i + m * sigma_n
 
             delta_lamda = f_pi_i / (E_b / (1.0 - w_i) + gamma + K)
 
-            s_pi_i = s_pi_i + delta_lamda * \
+            s_pi_i += delta_lamda * \
                 np.sign(tau_i_1 - gamma * alpha_i) / (1 - w_i)
 
             Y_i = 0.5 * E_b * (s_i - s_pi_i) ** 2.0
-
-            diss_i += (tau_pi_bar - m * sigma_n / 3.0) * delta_lamda + \
-                Y_i * ((1.0 - w_i) ** c) * (delta_lamda * (Y_i / S) ** r)
-
+                
             tau_i = E_b * (1.0 - w_i) * (s_i - s_pi_i)
 
             alpha_i += delta_lamda * \
@@ -144,7 +146,18 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
                 
             z_i += delta_lamda
             
+            
+            
+            
             s_pi_cum_i = s_pi_cum_i + delta_lamda / (1.0 - w_i)
+            
+            f_pi = np.fabs(tau_i/(1.0 - w_i) - gamma * alpha_i) - \
+            tau_pi_bar - K * z_i + m * sigma_n
+            
+            diss_i += (tau_pi_bar - m * sigma_n / 3.0) * delta_lamda + \
+                Y_i * ((1.0 - w_i) ** c) * (delta_lamda * (Y_i / S) ** r)
+            
+            #print('f_pi=', f_pi)
 
         tau_max_i = np.fabs(tau_i)
         tau_arr[i] = tau_i
@@ -178,39 +191,35 @@ if __name__ == '__main__':
     s_arr_4 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 100)
                          for i in range(len(s_history) - 1)])
     
-    s_arr_5 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 200)
-                         for i in range(len(s_history) - 1)])
 
 
     s_arr_1, tau_arr_1, w_arr_1, s_pi_arr_1, s_max_1, tau_max_1, s_pi_cum_1, diss_1 = get_bond_slip(
-        s_arr_1, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+        s_arr_1, tau_pi_bar=5, K=100, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
 
     s_arr_2, tau_arr_2, w_arr_2, s_pi_arr_2, s_max_2, tau_max_2, s_pi_cum_2, diss_2 = get_bond_slip(
-        s_arr_2, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+        s_arr_2, tau_pi_bar=5, K=100, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
 
     s_arr_3, tau_arr_3, w_arr_3, s_pi_arr_3, s_max_3, tau_max_3, s_pi_cum_3, diss_3 = get_bond_slip(
-        s_arr_3, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+        s_arr_3, tau_pi_bar=5, K=100, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
 
     s_arr_4, tau_arr_4, w_arr_4, s_pi_arr_4, s_max_4, tau_max_4, s_pi_cum_4, diss_4 = get_bond_slip(
-        s_arr_4, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+        s_arr_4, tau_pi_bar=5, K=100, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
     
-    s_arr_5, tau_arr_5, w_arr_5, s_pi_arr_5, s_max_5, tau_max_5, s_pi_cum_5, diss_5 = get_bond_slip(
-        s_arr_5, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
+
     
     
 
     ax1 = plt.subplot(221)
 
     ax1.plot(s_arr_1, tau_arr_1, 'b', linewidth=2,
-             label='$ \sigma_N = 0$ MPa')
+             label='10')
     ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
-             label='$ \sigma_N = 10$ MPa')
+             label='20')
     ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
+             label='50')
     ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
-    ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
+             label='100')
+
     ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
     plt.title('Bond_slip')
@@ -221,16 +230,14 @@ if __name__ == '__main__':
     ax2 = plt.subplot(222)
 
     ax2.plot(s_arr_1, w_arr_1, 'b', linewidth=2,
-             label='$ \sigma_N = 0$ MPa')
+             label='10')
     ax2.plot(s_arr_2, w_arr_2, 'r', linewidth=2,
-             label='$ \sigma_N = 10$ MPa')
+             label='20')
     ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
+             label='50')
     ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
+             label='100')
     
-    ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
     plt.title('Damage evolution')
@@ -249,8 +256,6 @@ if __name__ == '__main__':
     plt.plot(s_pi_cum_3, w_arr_3, 'g', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
     plt.plot(s_pi_cum_4, w_arr_4, 'k', linewidth=2,
-             label='$ \sigma_N = 20$ MPa')
-    plt.plot(s_pi_cum_5, w_arr_5, 'y', linewidth=2,
              label='$ \sigma_N = 20$ MPa')
 
     plt.xlabel('Cumulative sliding(mm)')
