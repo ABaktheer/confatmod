@@ -1,22 +1,5 @@
-'''
-Created on 14.06.2017
-
-@author: abaktheer
-'''
-
-'''
-Implementation of the fatigue model for plain concrete [A.Alliche, 2004] under uniaxial compressive loading
-(stress driven algorithm)
-'''
 
 
-'''
-To do#
-
-1. model class
-2. loading scenario class (reduce repetition)
-3. improve printing
-'''
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -100,22 +83,27 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         d_D = Y_norm  # * d_w
         D_i += d_D
         # print 'Y=', Y_norm
-        print('D=', D_i)
+        #print('D=', D_i)
 
         # Helmholtz free energy
         phi_i = 0.5 * lamda * (eps_1_i + 2.0 * eps_2_i)**2.0 + mu * ((eps_1_i)**2.0 + 2.0 * eps_2_i**2.0) + 2.0 * g * w_i * eps_2_i + alpha * \
             (2.0 * w_i * eps_1_i * eps_2_i + 4.0 * w_i *
              eps_2_i**2.0) + 4.0 * beta * w_i * eps_2_i**2.0
 
-        if w_i > 5.0:
+#         if w_i > 5.0:
+#             print(' ----------> No Convergence any more')
+#             print(i)
+#             break
+        
+        if d_w  > 0.5:
             print(' ----------> No Convergence any more')
             print(i)
             break
 
-        if abs(eps_1_i) > 0.005:
-            print(' ----------> No Convergence any more')
-            print(i)
-            break
+#         if abs(eps_1_i) > 0.005:
+#             print(' ----------> No Convergence any more')
+#             print(i)
+#             break
 
         eps_1_arr[i] = eps_1_i
         eps_2_arr[i] = eps_2_i
@@ -127,48 +115,40 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
     return sigma_1_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, i, phi_arr
 
 
+
 if __name__ == '__main__':
 
     m = 50  # number of increments in each cycle
+    
+    Nf_H = 3667
+    Nf_L = 321437
+ 
+ 
+    n1 = np.int(0.5 * Nf_L)
+    n2 = np.int(0.5 * Nf_L) 
+    
+    #n1 = 521
+    #n2 = 100
+    
+    #print(n1)
+    #print(n2)
 
-#     n1 = 3
-#     n2 = 13
-#     n3 = 44
-#     n4 = 164
-#     n5 = 78
-#     n6 = 600
+    b = 2  # number_of_repeted_blocks
 
-    n1 = 1
-    n2 = 1
-    n3 = 1
-    n4 = 1
-    n5 = 1
-    n6 = 1
+    sigma_u = - 99
 
-    b = 100  # number_of_repeted_blocks
-
-    sigma_u = - 120
-
-    stress_level_1_max = 0.80 * sigma_u
-    stress_level_2_max = 0.90 * sigma_u
-    stress_level_3_max = 0.80 * sigma_u
-    stress_level_4_max = 0.90 * sigma_u
-    stress_level_5_max = 0.80 * sigma_u
-    stress_level_6_max = 0.90 * sigma_u
+    stress_level_1_max = 0.75 * sigma_u
+    stress_level_2_max = 0.75 * sigma_u
 
     stress_level_1_min = 0.2 * sigma_u
     stress_level_2_min = 0.2 * sigma_u
-    stress_level_3_min = 0.2 * sigma_u
-    stress_level_4_min = 0.2 * sigma_u
-    stress_level_5_min = 0.2 * sigma_u
-    stress_level_6_min = 0.2 * sigma_u
-    #unloading_ratio = 0.0
+
 
     d_0 = np.zeros(1)
 
     d_1 = np.linspace(0, stress_level_1_max, n1 * 2)
     d_1.reshape(-1, 2)[:, 0] = stress_level_1_max
-    #d_1[0] = 0.0
+
     d_1.reshape(-1, 2)[:, 1] = stress_level_1_min
     d_history_1 = d_1.flatten()
     sig_1_arr = np.hstack([np.linspace(d_history_1[i], d_history_1[i + 1], m, dtype=np.float_)
@@ -181,100 +161,56 @@ if __name__ == '__main__':
     sig_2_arr = np.hstack([np.linspace(d_history_2[i], d_history_2[i + 1], m, dtype=np.float_)
                            for i in range(len(d_2) - 1)])
 
-    d_3 = np.linspace(0, stress_level_3_max, n3 * 2)
-    d_3.reshape(-1, 2)[:, 0] = stress_level_3_max
-    d_3.reshape(-1, 2)[:, 1] = stress_level_3_min
-    d_history_3 = d_3.flatten()
-    sig_3_arr = np.hstack([np.linspace(d_history_3[i], d_history_3[i + 1], m, dtype=np.float_)
-                           for i in range(len(d_3) - 1)])
-
-    d_4 = np.linspace(0, stress_level_4_max, n4 * 2)
-    d_4.reshape(-1, 2)[:, 0] = stress_level_4_max
-    d_4.reshape(-1, 2)[:, 1] = stress_level_4_min
-    d_history_4 = d_4.flatten()
-    sig_4_arr = np.hstack([np.linspace(d_history_4[i], d_history_4[i + 1], m, dtype=np.float_)
-                           for i in range(len(d_4) - 1)])
-
-    d_5 = np.linspace(0, stress_level_5_max, n5 * 2)
-    d_5.reshape(-1, 2)[:, 0] = stress_level_5_max
-    d_5.reshape(-1, 2)[:, 1] = stress_level_5_min
-    d_history_5 = d_5.flatten()
-    sig_5_arr = np.hstack([np.linspace(d_history_5[i], d_history_5[i + 1], m, dtype=np.float_)
-                           for i in range(len(d_5) - 1)])
-
-    d_6 = np.linspace(0, stress_level_6_max, n6 * 2)
-    d_6.reshape(-1, 2)[:, 0] = stress_level_6_max
-    d_6.reshape(-1, 2)[:, 1] = stress_level_6_min
-    d_history_6 = d_6.flatten()
-    sig_6_arr = np.hstack([np.linspace(d_history_6[i], d_history_6[i + 1], m, dtype=np.float_)
-                           for i in range(len(d_6) - 1)])
 
     sig_0_1_arr = np.linspace(
         d_0[-1], d_history_1[0], m, dtype=np.float_)
     sig_1_2_arr = np.linspace(
         d_history_1[-1], d_history_2[0], m, dtype=np.float_)
-    sig_2_3_arr = np.linspace(
-        d_history_2[-1], d_history_3[0], m, dtype=np.float_)
-    sig_3_4_arr = np.linspace(
-        d_history_3[-1], d_history_4[0], m, dtype=np.float_)
-    sig_4_5_arr = np.linspace(
-        d_history_4[-1], d_history_5[0], m, dtype=np.float_)
-    sig_5_6_arr = np.linspace(
-        d_history_5[-1], d_history_6[0], m, dtype=np.float_)
+
 
     sig_1_1_arr = np.linspace(
         sig_1_arr[-1], sig_1_arr[0], m, dtype=np.float_)
-    sig_6_1_arr = np.linspace(
-        sig_6_arr[-1], sig_1_arr[0], m, dtype=np.float_)
-    sig_6_6_arr = np.linspace(
-        sig_6_arr[-1], sig_6_arr[0], m, dtype=np.float_)
+    sig_2_1_arr = np.linspace(
+        sig_2_arr[-1], sig_1_arr[0], m, dtype=np.float_)
+    sig_2_2_arr = np.linspace(
+        sig_2_arr[-1], sig_2_arr[0], m, dtype=np.float_)
+
 
     sigma_1_arr = np.hstack(
-        (d_0, sig_0_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr, sig_2_3_arr, sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr, sig_5_6_arr, sig_6_arr))
+        (d_0, sig_0_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr))
 
     sigma_arr = sigma_1_arr
 
     for i in range(1, b):
 
         # for constant repeating
-        sigma_arr = np.hstack((sigma_arr, sig_6_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr, sig_2_3_arr,
-                               sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr,
-                               sig_5_6_arr, sig_6_arr))
+        sigma_arr = np.hstack((sigma_arr, sig_2_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr))
 
-#         # for repeating (H-L-H) or (L-H-L)
-#         if int(i) % 2 == 0:
-#             # print 'even'
-#             sigma_arr = np.hstack(
-#                 (sigma_arr, sig_6_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr, sig_2_3_arr, sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr, sig_5_6_arr, sig_6_arr))
-#         else:
-#             # print 'odd'
-#             sigma_arr = np.hstack(
-#                 (sigma_arr, sig_6_6_arr, sig_6_arr, sig_5_6_arr, sig_5_arr, sig_4_5_arr, sig_4_arr, sig_3_4_arr, sig_3_arr, sig_2_3_arr, sig_2_arr, sig_1_2_arr, sig_1_arr))
 
     print(sigma_arr.shape)
 
     t_arr = np.linspace(0, 1, len(sigma_arr))
 
-    # C120
-    sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(
-        sigma_arr, lamda=12500, mu=18750, alpha=2237.5, beta=-2216.5, g=-10.0,
-        C0=0.00, C1=0.0019, K=0.00485, n=10)
-
-#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
-# sigma_arr, lamda=13972.2, mu=20958.3, alpha=2237.5, beta=-2216.5,
-# g=-10.0, C0=0.00, C1=0.00188, K=0.003345, n=10)
-
-
 #     # C120
-#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
+#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(
 #         sigma_arr, lamda=12500, mu=18750, alpha=2237.5, beta=-2216.5, g=-10.0,
 #         C0=0.00, C1=0.0019, K=0.00485, n=10)
-
-#     # C80 - alliche paper
-#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
-# sigma_arr, lamda=10555.55, mu=15833.33, alpha=2237.5, beta=-2216.5,
-# g=-9.788, C0=0.00, C1=0.002033, K=0.003345, n=10)
-
+    
+    
+    
+    lamda=10555.55
+    mu=15833.33 
+    alpha=2000 
+    beta=-2216.5 
+    g=-9.8 
+    C0=0.00
+    C1=0.002
+    K=0.005
+    n=18
+ 
+    # C80 
+    sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(sigma_arr, lamda, mu, alpha, beta, g, C0, C1, K, n)
+    
     #-----------------------------------------------------------------------
     # plot 1
     #-----------------------------------------------------------------------
@@ -331,7 +267,7 @@ if __name__ == '__main__':
     #-----------------------------------------------------------------------
 #     plt.subplot(225)
 #
-    n = b * (n1 + n2 + n3 + n4 + n5 + n6)
+    n = b * (n1 + n2 )
 #     eps_1 = np.zeros(n)
 #     cycle = np.zeros(n)
 #     sig_1 = np.zeros(n)
@@ -429,81 +365,7 @@ if __name__ == '__main__':
     plt.ylabel('$Y$')
 
 
-# #     #-----------------------------------------------------------------
-# #     # plot 6
-# #     #-----------------------------------------------------------------
-#     plt.subplot(236)
-#     phi = np.zeros(n)
-#     cycle = np.zeros(n)
-#     for i in range(0, n, 1):
-#         idx = m + 2 * i * m - 1
-#         if idx <= len(phi_arr[0:inc]):
-#             idx = idx
-#         else:
-#             idx = m + 2 * (i - 1.0) * m - 1
-#             break
-#
-#         phi[i] = phi_arr[idx]
-#         cycle[i] = i + 1
-#
-#     plt.plot(cycle[0:i], phi[0:i], 'k', linewidth=1, alpha=1)
-#     plt.xlabel('number of cycles')
-#     plt.ylabel('free energy')
 
-    #-----------------------------------------------------------------------
-    # plot 7
-    #-----------------------------------------------------------------------
-#     plt.subplot(236)
-#     plt.plot(eps_2_arr, sigma_1_arr, 'b', linewidth=1, alpha=1.0)
-#     plt.title('$ \epsilon_{22} - \sigma_{11}$')
-#     plt.xlabel('$\epsilon_{22}$')
-#     plt.ylabel('$\sigma_{11}$[MPa]')
-#     # plt.legend(loc=4)
 
-    #=========================================================================
-    # saving results
-    #=========================================================================
-    eps_max_record = np.zeros(1)
-    eps_min_record = np.zeros(1)
-    N_record = np.zeros(1)
-    w_record = np.zeros(1)
-    stiffness_record = np.zeros(1)
-
-    for i in range(0, i, 1):
-        eps_max_record = np.vstack((eps_max_record, eps_1_max[i]))
-        eps_min_record = np.vstack((eps_min_record, eps_1_min[i]))
-        N_record = np.vstack((N_record, cycle[i]))
-        w_record = np.vstack((w_record, w[i]))
-        stiffness_record = np.vstack(
-            (stiffness_record, stress_level_1_max / eps_1_max[i]))
-
-#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\eps_max.txt',
-#                np.transpose(eps_max_record), delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\eps_2.txt',
-#                np.transpose(eps_record_2), delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\N.txt',
-#                np.transpose(N_record), delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\w.txt',
-#                np.transpose(w_record), delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\stiffness.txt',
-#                np.transpose(stiffness_record), delimiter=" ", fmt="%s")
-# 
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_Article\results\Alliche\saving\eps_arr.txt',
-#                eps_1_arr[0:inc], delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_Article\results\Alliche\saving\sig_arr.txt',
-#                sigma_arr[0:inc], delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_Article\results\Alliche\saving\w_arr.txt',
-#                w_arr[0:inc], delimiter=" ", fmt="%s")
-# 
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_Article\results\Alliche\saving\N.txt',
-#                N_record, delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_Article\results\Alliche\saving\w.txt',
-#                w_record, delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_Article\results\Alliche\saving\eps_max.txt',
-#                eps_max_record, delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_papre\results\Alliche\saving\eps_min.txt',
-#                eps_min_record, delimiter=" ", fmt="%s")
-#     np.savetxt(r'E:\Publishing\Educative_fatigue_papre\results\Alliche\saving\stiffness.txt',
-#                stiffness_record, delimiter=" ", fmt="%s")
 
     plt.show()

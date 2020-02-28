@@ -55,7 +55,6 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
     #-----------------------------------------------------------------------
     # state variables
     #-----------------------------------------------------------------------
-    #sigma_1_arr[0] = 0
     eps_1_i = 0.0
     eps_2_i = 0.0
     w_i = 0.0
@@ -97,30 +96,21 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         Y_norm = np.sqrt((-g * eps_1_i - alpha * (eps_1_i + 2. * eps_2_i) * eps_1_i
                           - 2. * beta * (eps_1_i**2.0))**2.0 + 2.0 * (-g * eps_2_i - alpha * (eps_1_i + 2. * eps_2_i) * eps_1_i
                                                                       - 2 * beta * (eps_1_i**2.0))**2.0)
-        d_D = Y_norm  # * d_w
+        d_D = Y_norm   * d_w
         D_i += d_D
-        # print 'Y=', Y_norm
-        #print('D=', D_i)
+
 
         # Helmholtz free energy
         phi_i = 0.5 * lamda * (eps_1_i + 2.0 * eps_2_i)**2.0 + mu * ((eps_1_i)**2.0 + 2.0 * eps_2_i**2.0) + 2.0 * g * w_i * eps_2_i + alpha * \
             (2.0 * w_i * eps_1_i * eps_2_i + 4.0 * w_i *
              eps_2_i**2.0) + 4.0 * beta * w_i * eps_2_i**2.0
 
-#         if w_i > 5.0:
-#             print(' ----------> No Convergence any more')
-#             print(i)
-#             break
         
         if d_w  > 0.5:
             print(' ----------> No Convergence any more')
             print(i)
             break
 
-#         if abs(eps_1_i) > 0.005:
-#             print(' ----------> No Convergence any more')
-#             print(i)
-#             break
 
         eps_1_arr[i] = eps_1_i
         eps_2_arr[i] = eps_2_i
@@ -134,10 +124,10 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
 
 if __name__ == '__main__':
 
-    m = 200  # number of increments in each cycle
+    m = 50  # number of increments in each cycle
 
-    n1 = 100000
-    n2 = 100000
+    n1 = 500000
+    n2 = 10
 
     sigma_u = - 99
     
@@ -364,12 +354,12 @@ if __name__ == '__main__':
          
     #------------------------------------------------------------------------------ 
     plt.subplot(223)
-    plt.plot(N_max_1[1:]/N_1, abs((eps_max_1[1:])/300), "k")
-    plt.plot(N_max_2[1:]/N_2, abs((eps_max_2[1:])/300), "k")
-    plt.plot(N_max_3[1:]/N_3, abs((eps_max_3[1:])/300), "k")
-    plt.plot(N_max_4[1:]/N_4, abs((eps_max_4[1:])/300), "k")
-    plt.plot(N_max_5[1:]/N_5, abs((eps_max_5[1:])/300), "k")
-    plt.plot(N_max_6[1:]/N_6, abs((eps_max_6[1:])/300), "k")
+    plt.plot(N_max_1[1:]/N_1, abs((eps_max_1[1:]-0.05)/300), "k")
+    plt.plot(N_max_2[1:]/N_2, abs((eps_max_2[1:]-0.05)/300), "k")
+    plt.plot(N_max_3[1:]/N_3, abs((eps_max_3[1:]-0.05)/300), "k")
+    plt.plot(N_max_4[1:]/N_4, abs((eps_max_4[1:]-0.05)/300), "k")
+    plt.plot(N_max_5[1:]/N_5, abs((eps_max_5[1:]-0.05)/300), "k")
+    plt.plot(N_max_6[1:]/N_6, abs((eps_max_6[1:]-0.05)/300), "k")
 
     plt.ylim(0.0015, 0.0045)
     plt.title('Fatigue creep curve normalized (H-L)')
@@ -407,13 +397,13 @@ if __name__ == '__main__':
     
     #------------------------------------------------------------------------------ 
     plt.subplot(224)
-    plt.plot(N_max_11[1:]/N_11, abs(eps_max_11[1:]/300), "k")
-    plt.plot(N_max_22[1:]/N_22, abs(eps_max_22[1:]/300), "k")
-    plt.plot(N_max_33[1:]/N_33, abs(eps_max_33[1:]/300), "k")
-    plt.plot(N_max_44[1:]/N_44, abs(eps_max_44[1:]/300), "k")
-    plt.plot(N_max_55[1:]/N_55, abs(eps_max_55[1:]/300), "k")
-    plt.plot(N_max_66[1:]/N_66, abs(eps_max_66[1:]/300), "k")
-    plt.plot(N_max_77[1:]/N_77, abs(eps_max_77[1:]/300), "k")
+    plt.plot(N_max_11[1:]/N_11, abs((eps_max_11[1:]-0.05)/300), "k")
+    plt.plot(N_max_22[1:]/N_22, abs((eps_max_22[1:]-0.05)/300), "k")
+    plt.plot(N_max_33[1:]/N_33, abs((eps_max_33[1:]-0.05)/300), "k")
+    plt.plot(N_max_44[1:]/N_44, abs((eps_max_44[1:]-0.05)/300), "k")
+    plt.plot(N_max_55[1:]/N_55, abs((eps_max_55[1:]-0.05)/300), "k")
+    plt.plot(N_max_66[1:]/N_66, abs((eps_max_66[1:]-0.05)/300), "k")
+    plt.plot(N_max_77[1:]/N_77, abs((eps_max_77[1:]-0.05)/300), "k")
     
     plt.ylim(0.0015, 0.0045)
     plt.title('Fatigue creep curve normalized (H-L)')
@@ -463,8 +453,45 @@ if __name__ == '__main__':
 
     plt.xlabel('Time')
     plt.ylabel('$\sigma_{1}$')
+    
+    
+    
+
+#------------------------------------------------------------------------------ 
+# Save results
+#------------------------------------------------------------------------------ 
+    eps_max_H_record = np.zeros(1)
+    eps_max_L_record = np.zeros(1)
+    
+    #eps_min_record = np.zeros(1)
+    
+    for i in range(0, i, 1):
+        eps_max_H_record = np.vstack((eps_max_H_record, eps_1_max_1[i]))
+        eps_max_L_record = np.vstack((eps_max_L_record, eps_1_max_2[i]))
+        
+        #eps_min_record = np.vstack((eps_min_record, eps_1_min[i]))
+        #N_record = np.vstack((N_record, cycle[i]))
+        #w_record = np.vstack((w_record, w[i]))
 
 
+#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\eps_max.txt',
+#                np.transpose(eps_max_record), delimiter=" ", fmt="%s")
+#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\eps_2.txt',
+#                np.transpose(eps_record_2), delimiter=" ", fmt="%s")
+#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\N.txt',
+#                np.transpose(N_record), delimiter=" ", fmt="%s")
+#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\w.txt',
+#                np.transpose(w_record), delimiter=" ", fmt="%s")
+#     np.savetxt(r'E:\Models_Implementation\Concrete Fatigue models\Alliche_2004\Results\loading_sequence\creep_fatigue\stiffness.txt',
+#                np.transpose(stiffness_record), delimiter=" ", fmt="%s")
+
+#     np.savetxt(r'H:\Publishing\Journal_papers\Journal_paper_loading_sequence_effect_02\results\C80_calibration\eps_arr_H.txt',
+#                eps_max_H_record, delimiter=" ", fmt="%s")
+#     np.savetxt(r'H:\Publishing\Journal_papers\Journal_paper_loading_sequence_effect_02\results\C80_calibration\eps_arr_L.txt',
+#                eps_max_L_record, delimiter=" ", fmt="%s")
+
+
+    
 
 
     plt.show()
