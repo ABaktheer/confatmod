@@ -11,7 +11,11 @@ from numpy.linalg import norm
 from numpy import \
     array, zeros, dot, trace, einsum, zeros_like,\
     identity, sign, linspace, hstack
+<<<<<<< HEAD
+from traits.api import Constant, \
+=======
 from traits.api import Constant,\
+>>>>>>> branch 'master' of https://github.com/ABaktheer/confatmod.git
     Float, HasTraits, Property, cached_property
 from traitsui.api import View, Include
 
@@ -596,7 +600,11 @@ if __name__ == '__main__':
 
     # monotonic loading
     n = 100
+<<<<<<< HEAD
+    s_levels = linspace(0, 0.002, 10)
+=======
     s_levels = linspace(0, 0.00002, 2)
+>>>>>>> branch 'master' of https://github.com/ABaktheer/confatmod.git
     #s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] = 0.0
     s_levels[0] = 0
