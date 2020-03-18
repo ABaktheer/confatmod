@@ -136,7 +136,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
             delta_lamda = f_pi_i / (E_b / (1.0 - w_i) + gamma + K)
 
             s_pi_i +=  delta_lamda * \
-                np.sign(tau_i_1 - gamma * alpha_i) / (1 - w_i)
+                np.sign(tau_i_1 - gamma * alpha_i) / (1.0 - w_i)
 
             Y_i = 0.5 * E_b * (s_i - s_pi_i) ** 2.0
 
@@ -154,12 +154,11 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
             tau_pi_bar - K * z_i + m * sigma_n
             
             
-#             diss_i += (tau_pi_bar - m * sigma_n / 3.0) * delta_lamda + \
-#                 Y_i * ((1.0 - w_i) ** c) * (delta_lamda * (Y_i / S) ** r)
-                
                 
             diss_i += tau_i* (s_pi_i - s_pi_arr[i-1]) - gamma*alpha_i *(delta_lamda * \
-                np.sign(tau_i_1 - gamma * alpha_i)) - K * z_i * delta_lamda + Y_i * (w_i - w_arr[i-1])    
+                np.sign(tau_i_1 - gamma * alpha_i)) - K * z_i * delta_lamda + Y_i * (w_i - w_arr[i-1])
+                
+       
             
             print('f=', f_i)
 
@@ -178,7 +177,7 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
 
 
 if __name__ == '__main__':
-    s_levels = np.linspace(0, 8, 2)
+    s_levels = np.linspace(0, 2.667, 2)
 
     s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] *= -1
@@ -229,17 +228,11 @@ if __name__ == '__main__':
         s_arr_5, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
      
     
-        
-#     s_arr_5, tau_arr_5, w_arr_5, s_pi_arr_5, s_max_5, tau_max_5, s_pi_cum_5, diss_5 = get_bond_slip(
-#         s_arr_5, tau_pi_bar=5, K=0, gamma=100, E_b=1000, S=.05, c=1, r=1.0, m=1.7, sigma_n=0)
-    
-    
 
-<<<<<<< HEAD
-    ax1 = plt.subplot(221)
-=======
+    
+
     ax1 = plt.subplot(231)
->>>>>>> branch 'master' of https://github.com/ABaktheer/confatmod.git
+
 
     ax1.plot(s_arr_1, tau_arr_1, 'b', linewidth=2,
              label=' n_steps = 10 ')
@@ -302,75 +295,23 @@ if __name__ == '__main__':
 
     #'''
     plt.subplot(234)
-    plt.plot(s_arr_1, s_pi_cum_1, 'b', linewidth=2,
+    plt.plot(s_arr_1, s_pi_arr_1, 'b', linewidth=2,
              label=' n_steps = 10 ')
-    plt.plot(s_arr_2, s_pi_cum_2, 'r', linewidth=2,
+    plt.plot(s_arr_2, s_pi_arr_2, 'r', linewidth=2,
              label=' n_steps = 20 ')
-    plt.plot(s_arr_3, s_pi_cum_3, 'g', linewidth=2,
+    plt.plot(s_arr_3, s_pi_arr_3, 'g', linewidth=2,
              label=' n_steps = 30 ')
-    plt.plot(s_arr_4, s_pi_cum_4,  'k', linewidth=2,
+    plt.plot(s_arr_4, s_pi_arr_4,  'k', linewidth=2,
              label=' n_steps = 40 ')
-    plt.plot(s_arr_5, s_pi_cum_5, 'y', linewidth=2,
+    plt.plot(s_arr_5, s_pi_arr_5, 'y', linewidth=2,
              label=' n_steps = 50 ')
 
     plt.xlabel('Slip(mm)')
     plt.ylabel('Cumulative sliding(mm)')
     #plt.ylim(0, 1)
     plt.legend()
-<<<<<<< HEAD
 
-    ax1.plot(s_arr_1, tau_arr_1, 'b')
-#     ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
-#              label=' MPa')
-#     ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
-#              label=' MPa')
-#     ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
-#              label=' MPa')
-#     ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
-#     ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
-#     plt.title('Bond_slip')
-#     plt.xlabel('Slip(mm)')
-#     plt.ylabel('Stress(MPa)')
-#     plt.legend(loc=4)
-# 
-#     ax2 = plt.subplot(222)
-# 
-#     ax2.plot(s_arr_1, w_arr_1, 'b', linewidth=2,
-#              label=' MPa')
-#     ax2.plot(s_arr_2, w_arr_2, 'r', linewidth=2,
-#              label=' MPa')
-#     ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
-#              label=' MPa')
-#     ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
-#              label='MPa')
-#     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
-#     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
-#     plt.title('Damage evolution')
-#     plt.ylim(0, 1)
-#     plt.xlabel('Slip(mm)')
-#     plt.ylabel('Damage')
-#     plt.legend(loc=4)
-# 
-#     #'''
-#     plt.subplot(223)
-# 
-#     plt.plot(s_pi_cum_1, w_arr_1, 'b', linewidth=2,
-#              label=' MPa')
-#     plt.plot(s_pi_cum_2, w_arr_2, 'r', linewidth=2,
-#              label=' MPa')
-#     plt.plot(s_pi_cum_3, w_arr_3, 'g', linewidth=2,
-#              label=' MPa')
-#     plt.plot(s_pi_cum_4, w_arr_4, 'k', linewidth=2,
-#              label=' MPa')
-# 
-#     plt.xlabel('Cumulative sliding(mm)')
-#     plt.ylabel('Damage')
-#     plt.ylim(0, 1)
-#     plt.legend()
-=======
-    
-    
-    #'''
+
     plt.subplot(235)
     plt.plot(s_arr_1, diss_1, 'b', linewidth=2,
              label=' n_steps = 10 ')
@@ -407,7 +348,6 @@ if __name__ == '__main__':
     plt.legend()
 
 
->>>>>>> branch 'master' of https://github.com/ABaktheer/confatmod.git
 
 
     plt.show()

@@ -27,6 +27,8 @@ def get_response(eps_N_arr, eps_T_arr, sig_0, sig_t, E_T, E_N, m, S_N, S_T, c_N,
     z_T_arr = np.zeros_like(eps_T_arr)
     alpha_T_arr = np.zeros_like(eps_T_arr)
     f_arr = np.zeros_like(eps_T_arr)
+    
+    eps_N_eq_arr = np.zeros_like(eps_T_arr)
 
     # state variables
     eps_N_p_i = 0.0
@@ -95,6 +97,7 @@ def get_response(eps_N_arr, eps_T_arr, sig_0, sig_t, E_T, E_N, m, S_N, S_T, c_N,
             f = np.fabs(sig_T_i /(1 - omega_T_i)  - gamma_T * alpha_T_i)  -\
             (sig_0  + K_T * z_T_i - m * sig_N_i /(1 - omega_N_i)) * (1.0 - np.heaviside(( sig_N_i /(1 - omega_N_i)), 1) * (( sig_N_i /(1 - omega_N_i))**2 / (sig_t)**2 ))   
                        
+            eps_N_eq_i =  (eps_N_i + eps_N_p_i)
             
         else: 
                 
@@ -103,7 +106,9 @@ def get_response(eps_N_arr, eps_T_arr, sig_0, sig_t, E_T, E_N, m, S_N, S_T, c_N,
             sig_T_i = (1 - omega_T_i) * sig_T_i_eff_trial 
         
             f  = 0
-
+            eps_N_p_i = 0
+            eps_N_eq_i = (eps_N_i + eps_N_p_i)
+        
         sig_N_trial_arr[i] = sig_N_i_eff_trial 
         sig_T_trial_arr[i] = sig_T_i_eff_trial
         sig_N_arr[i] = sig_N_i 
@@ -115,15 +120,16 @@ def get_response(eps_N_arr, eps_T_arr, sig_0, sig_t, E_T, E_N, m, S_N, S_T, c_N,
         z_T_arr[i] = z_T_i
         alpha_T_arr[i] = alpha_T_i
         f_arr[i] = f
+        eps_N_eq_arr[i] = eps_N_eq_i
         
-    return  sig_N_trial_arr, sig_T_trial_arr, sig_N_arr, sig_T_arr, eps_T_p_arr, eps_N_p_arr, omega_N_arr, omega_T_arr, z_T_arr, alpha_T_arr, f_arr 
+    return  sig_N_trial_arr, sig_T_trial_arr, sig_N_arr, sig_T_arr, eps_T_p_arr, eps_N_p_arr, omega_N_arr, omega_T_arr, z_T_arr, alpha_T_arr, f_arr , eps_N_eq_arr
 
 
 if __name__ == '__main__':
     
     inc = 100
 
-    s_history = np.array([0, 0.0003])
+    s_history = np.array([0, 0.0002])
     eps_N_arr = np.hstack([np.linspace(s_history[i], s_history[i + 1], inc)
                          for i in range(len(s_history) - 1)])
     
@@ -131,7 +137,7 @@ if __name__ == '__main__':
     
     
 
-    s_history = np.array([0, 0.0006])
+    s_history = np.array([0, 0.00])
     eps_T_arr = np.hstack([np.linspace(s_history[i], s_history[i + 1], inc)
                          for i in range(len(s_history) - 1)])
     
@@ -141,7 +147,7 @@ if __name__ == '__main__':
     
     sig_0=10.0
     E_N=50000.
-    E_T=20000.
+    E_T=25000.
     sig_t = 5.0
     S_N = 0.00000001
     S_T = 0.0000005
@@ -151,10 +157,10 @@ if __name__ == '__main__':
     gamma_T = 0
 
     m=0.1
-    b=0.2
+    b=0.1
 
 
-    sig_N_trial_arr, sig_T_trial_arr, sig_N_arr, sig_T_arr, eps_T_p_arr, eps_N_p_arr, omega_N_arr, omega_T_arr, z_T_arr, alpha_T_arr, f_arr = get_response(
+    sig_N_trial_arr, sig_T_trial_arr, sig_N_arr, sig_T_arr, eps_T_p_arr, eps_N_p_arr, omega_N_arr, omega_T_arr, z_T_arr, alpha_T_arr, f_arr , eps_N_eq_arr = get_response(
         eps_N_arr, eps_T_arr, sig_0, sig_t, E_T, E_N, m, S_N, S_T, c_N, c_T, K_T, gamma_T)
     
     
@@ -192,8 +198,11 @@ if __name__ == '__main__':
     ax2 = plt.subplot(233)
     ax2.plot(t_N_arr, omega_N_arr, 'k', linewidth=2,
              label='normal')
+    
     ax2.plot(t_T_arr, omega_T_arr, 'r', linewidth=2,
              label='tangential')
+    
+    
 
     plt.title('Damage evolution')
     plt.ylim(0, 1)
@@ -206,9 +215,11 @@ if __name__ == '__main__':
     # plastic strains
     ax2 = plt.subplot(234)
 
-    ax2.plot(eps_N_arr, eps_N_p_arr, 'k', linewidth=2,
+    ax2.plot(t_N_arr, 0*sig_N_arr, 'k', linewidth=2,
              label='normal')
-    ax2.plot(eps_T_arr, eps_T_p_arr, 'r', linewidth=2,
+    ax2.plot(t_N_arr, eps_N_eq_arr, 'k', linewidth=2,
+             label='normal')
+    ax2.plot(t_T_arr, 0*sig_T_arr, 'r', linewidth=2,
              label='tangential')
 
     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
@@ -216,6 +227,9 @@ if __name__ == '__main__':
     plt.title('plastic strains')
     plt.xlabel('strain')
     plt.ylabel('plastic strains')
+    
+    
+
 
 
     # threshold

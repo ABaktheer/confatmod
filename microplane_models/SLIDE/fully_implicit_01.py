@@ -139,7 +139,7 @@ if __name__ == '__main__':
     
     inc = 100
 
-    s_history = np.array([0, 0.00025])
+    s_history = np.array([0, 0.000])
     eps_N_arr = np.hstack([np.linspace(s_history[i], s_history[i + 1], inc)
                          for i in range(len(s_history) - 1)])
     
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     
     
 
-    s_history = np.array([0, 0.005])
+    s_history = np.array([0, 0.001])
     eps_T_arr = np.hstack([np.linspace(s_history[i], s_history[i + 1], inc)
                          for i in range(len(s_history) - 1)])
     
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     gamma_T = 0
 
     m=0.2
-    b=0.2
+    b=0.1
 
 
     sig_N_trial_arr, sig_T_trial_arr, sig_N_arr, sig_T_arr, eps_T_p_arr, eps_N_p_arr, omega_N_arr, omega_T_arr, f_arr = get_bond_slip_(
