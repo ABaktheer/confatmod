@@ -29,13 +29,13 @@ for i in np.arange(0, len(m)):
     
     #f_t = (1.0 - np.heaviside((sig_N - sig_t1), 1) * ((sig_N - sig_t1)**2 / (sig_t2 - sig_t1)**2  ))
     
-    f_t = 1.0 - np.heaviside((sig_N), 1) * ((sig_N)**2 / (sig_t)**2)
+    f_t = np.sqrt(1.0 - np.heaviside((sig_N), 1) * ((sig_N)**2 / (sig_t)**2))
     
     #f_c = (1.0 - np.heaviside((sig_c - sig_N),1) *((sig_N - sig_c)**2 / (Rc*(tau_bar - m[i] * sig_c))**2)  )
     
-    f_c = 1.0 - np.heaviside((sig_c1 - sig_N),1) * ((sig_N - sig_c1)**2 / (sig_c2 - sig_c1)**2  )
+    f_c = np.sqrt((1.0 - np.heaviside((sig_c1 - sig_N),1) * ((sig_N - sig_c1)**2 / (sig_c2 - sig_c1)**2  )))
     
-    f = np.sqrt((tau_bar - m[i] * sig_N)**2  * f_t * f_c)
+    f = (tau_bar - m[i] * sig_N) * f_t  #* f_c
     
 
      

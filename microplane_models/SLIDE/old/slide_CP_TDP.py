@@ -7,7 +7,7 @@ Created on 07.04.2017
 from numpy import \
     zeros_like, sign, linspace, hstack, fabs
 
-#from scipy.optimize import newton
+from scipy.optimize import newton
 
 import matplotlib.pyplot as plt
 
@@ -213,7 +213,7 @@ if __name__ == '__main__':
     s_history_3 = s_levels.flatten()
     #s_history_3 = [0, 0.0002, 0.0, 0.0005, 0.0, 0.005]
 
-    s_levels = linspace(0,  0.0008, 4)
+    s_levels = linspace(0,  0.0008, 20)
     s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] *= -1
     s_history_4 = s_levels.flatten()
