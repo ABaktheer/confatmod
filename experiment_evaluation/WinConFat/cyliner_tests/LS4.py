@@ -14,9 +14,24 @@ import numpy as np
 
 "#C40"
 
+
+
+eps_max_high_1 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\CT40-64__000-527112_001_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+eps_max_low_1 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\CT40-64_527112-1050000_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+N_1 =  len(eps_max_high_1) + len(eps_max_low_1 ) 
+N_max_1 = np.arange(1, N_1 +1, 1)
+eps_max_1 = np.hstack((eps_max_high_1 ,  eps_max_low_1))
+
+
+eps_min_high_11 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\CT40-64__000-527112_001_avg_WA1 mm_WA2 mm_WA3 mm_min.npy')
+eps_min_low_11 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\CT40-64_527112-1050000_avg_WA1 mm_WA2 mm_WA3 mm_min.npy')
+N_11 =  len(eps_min_high_11) + len(eps_min_low_11 ) 
+N_min_1 = np.arange(1, N_11 +1, 1)
+eps_min_1 = np.hstack((eps_min_high_11 ,  eps_min_low_11))
+
 plt.subplot(131)
-
-
+plt.plot(N_max_1[1:], (abs(eps_max_1[1:]))/300, "k")
+plt.plot(N_min_1[1:], (abs(eps_min_1[1:]))/300, "k")
 
 plt.ylim(0.0, 0.0045)
 plt.xlim(-100, 750000)

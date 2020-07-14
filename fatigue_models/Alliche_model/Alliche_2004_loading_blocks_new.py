@@ -145,7 +145,9 @@ if __name__ == '__main__':
     n5 = 50
     n6 = 50
 
+
     b = 3  # number_of_repeted_blocks
+
 
     sigma_u = - 120
 

@@ -149,7 +149,7 @@ if __name__ == '__main__':
     plt.ylabel('stress(MPa)')
     plt.legend(loc=2)
     
-    ax2 = plt.subplot(233)
+    ax2 = plt.subplot(111)
     ax2.plot(s_arr_1, xs_pi_arr_1, color='k', label='a')
     ax2.plot(s_arr_2, xs_pi_arr_2, color='r', label='b')
     ax2.plot(s_arr_3, xs_pi_arr_3, color='k')
