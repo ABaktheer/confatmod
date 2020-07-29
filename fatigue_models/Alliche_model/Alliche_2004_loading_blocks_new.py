@@ -87,7 +87,10 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         # loading stage (evolve of the fatigue damage based on (Marigo.85)
         # model)
         if m > 0:
-            d_w = m * abs(g) / (2.0 * C1) * (f_i / K)**n
+            #d_w = m * abs(g) / (2.0 * C1) * (f_i / K)**n
+            #print( 'f_i', f_i)
+            d_w = m * abs(g) / (2.0 * C1) * (np.abs(f_i / K)**n) #* np.sign((f_i / K))
+            print( 'd_w', d_w)
         else:  # unloading stage (no fatigue damage)
             d_w = 0
 
@@ -100,7 +103,7 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         d_D = Y_norm  # * d_w
         D_i += d_D
         # print 'Y=', Y_norm
-        print('D=', D_i)
+        #print('D=', D_i)
 
         # Helmholtz free energy
         phi_i = 0.5 * lamda * (eps_1_i + 2.0 * eps_2_i)**2.0 + mu * ((eps_1_i)**2.0 + 2.0 * eps_2_i**2.0) + 2.0 * g * w_i * eps_2_i + alpha * \
@@ -138,15 +141,15 @@ if __name__ == '__main__':
 #     n5 = 78
 #     n6 = 600
 
-    n1 = 10
-    n2 = 10
-    n3 = 10
-    n4 = 50
-    n5 = 50
-    n6 = 50
+    n1 = 2000
+    n2 = 2
+    n3 = 2
+    n4 = 2
+    n5 = 2
+    n6 = 2
 
 
-    b = 3  # number_of_repeted_blocks
+    b = 1  # number_of_repeted_blocks
 
 
     sigma_u = - 120
@@ -154,9 +157,9 @@ if __name__ == '__main__':
     stress_level_1_max = 0.85 * sigma_u
     stress_level_2_max = 0.85 * sigma_u
     stress_level_3_max = 0.85 * sigma_u
-    stress_level_4_max = 0.75 * sigma_u
-    stress_level_5_max = 0.75 * sigma_u
-    stress_level_6_max = 0.75 * sigma_u
+    stress_level_4_max = 0.85 * sigma_u
+    stress_level_5_max = 0.85 * sigma_u
+    stress_level_6_max = 0.85 * sigma_u
 
     stress_level_1_min = 0.2 * sigma_u
     stress_level_2_min = 0.2 * sigma_u
@@ -253,14 +256,14 @@ if __name__ == '__main__':
 #             sigma_arr = np.hstack(
 #                 (sigma_arr, sig_6_6_arr, sig_6_arr, sig_5_6_arr, sig_5_arr, sig_4_5_arr, sig_4_arr, sig_3_4_arr, sig_3_arr, sig_2_3_arr, sig_2_arr, sig_1_2_arr, sig_1_arr))
 
-    print(sigma_arr)
+    #print(sigma_arr)
 
     t_arr = np.linspace(0, 1, len(sigma_arr))
 
     # C120
     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(
         sigma_arr, lamda=12500, mu=18750, alpha=2237.5, beta=-2216.5, g=-10.0,
-        C0=0.00, C1=0.0019, K=0.00485, n=10)
+        C0=0.00, C1=0.0019, K=0.00485, n=10.0)
 
 #     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
 # sigma_arr, lamda=13972.2, mu=20958.3, alpha=2237.5, beta=-2216.5,
