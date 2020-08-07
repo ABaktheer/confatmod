@@ -89,7 +89,10 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         # loading stage (evolve of the fatigue damage based on (Marigo.85)
         # model)
         if m > 0:
-            d_w = m * abs(g) / (2.0 * C1) * (f_i / K)**n
+            #d_w = m * abs(g) / (2.0 * C1) * (f_i / K)**n
+            #print( 'f_i', f_i)
+            d_w = m * abs(g) / (2.0 * C1) * (np.abs(f_i / K)**n) #* np.sign((f_i / K))
+
         else:  # unloading stage (no fatigue damage)
             d_w = 0
 
@@ -150,15 +153,21 @@ def fatigue_life(S_max, Nf_arr):
     return Nf
 
 
+
 def loading_scenario(m, Nf_arr_0):
     
     #m = 50  # number of increments in each cycle
 
+
     load_levels = [0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+
+
+    b = 1  # number_of_repeted_blocks
 
 
     sigma_u = - 120.
 
+
     S_max_1 = np.asarray(r.sample(load_levels, 1)) * sigma_u
     S_max_2 = np.asarray(r.sample(load_levels, 1)) * sigma_u
     S_max_3 = np.asarray(r.sample(load_levels, 1)) * sigma_u
@@ -176,15 +185,6 @@ def loading_scenario(m, Nf_arr_0):
     S_min_7 = 0.2 * sigma_u
 
 
-#     Nf_065 = 5000.
-#     Nf_070 = 2000.
-#     Nf_075 = 1000.
-#     Nf_080 = 800.
-#     Nf_085 = 500.
-#     Nf_090 = 200.
-#     Nf_095 = 100.
-#     
-#     Nf_arr_0 = np.array([Nf_065, Nf_070, Nf_075, Nf_080, Nf_085, Nf_090, Nf_095])
     
     eta_ratio = [0.02, 0.04, 0.08, 0.1, 0.2, 0.5]
     
@@ -306,6 +306,20 @@ def loading_scenario(m, Nf_arr_0):
                                sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr,
                                sig_5_6_arr, sig_6_arr, sig_6_7_arr, sig_7_arr))
 
+
+#         # for repeating (H-L-H) or (L-H-L)
+#         if int(i) % 2 == 0:
+#             # print 'even'
+#             sigma_arr = np.hstack(
+#                 (sigma_arr, sig_6_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr, sig_2_3_arr, sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr, sig_5_6_arr, sig_6_arr))
+#         else:
+#             # print 'odd'
+#             sigma_arr = np.hstack(
+#                 (sigma_arr, sig_6_6_arr, sig_6_arr, sig_5_6_arr, sig_5_arr, sig_4_5_arr, sig_4_arr, sig_3_4_arr, sig_3_arr, sig_2_3_arr, sig_2_arr, sig_1_2_arr, sig_1_arr))
+
+    #print(sigma_arr)
+
+
     t_arr = np.linspace(0, 1, len(sigma_arr))
     
     
@@ -330,7 +344,7 @@ def get_eta(m, N_f_all, sigma_u, Nf_arr_0):
     
 if __name__ == '__main__':
 
-    n= 50
+    n= 2
     etas = np.zeros([n])
     for i in range (1, n):
         print('sample:', i)
@@ -370,6 +384,12 @@ if __name__ == '__main__':
     
     x = np.arange(1, len(etas) +1)
     plt.plot(x, etas, 'ro', markersize=5, color='k')
+
+
+#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
+# sigma_arr, lamda=13972.2, mu=20958.3, alpha=2237.5, beta=-2216.5,
+# g=-10.0, C0=0.00, C1=0.00188, K=0.003345, n=10)
+
 
 
     plt.subplot(222)

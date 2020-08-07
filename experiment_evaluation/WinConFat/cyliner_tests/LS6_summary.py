@@ -9,7 +9,9 @@ import pandas as pd
 # Data (H-L) (experiments)
 #======================================================================================
 r = [0,1,2]
-raw_data = {'greenBars': [5, 7, 3], 'orangeBars': [0, 0, 1],'blueBars': [0, 4, 3]}
+
+raw_data = {'greenBars': [5, 7, 4], 'orangeBars': [0, 0, 1],'blueBars': [0, 4, 3]}
+
 df = pd.DataFrame(raw_data)
  
 # From raw value to percentage
@@ -38,7 +40,9 @@ plt.ylim(0.0, 100)
 # Data (L-H) (experiments)
 #======================================================================================
 r = [0,1,2]
-raw_data = {'greenBars': [2, 3, 0], 'orangeBars': [0, 2, 0],'blueBars': [3, 6, 5]}
+
+raw_data = {'greenBars': [2, 2, 0], 'orangeBars': [0, 1, 0],'blueBars': [3, 7, 5]}
+
 df = pd.DataFrame(raw_data)
  
 # From raw value to percentage

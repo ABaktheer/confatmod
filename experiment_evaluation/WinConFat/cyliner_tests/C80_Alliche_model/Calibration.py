@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     m = 50  # number of increments in each cycle
 
-    n1 = 500000
+    n1 = 500
     n2 = 10
 
     sigma_u = - 99
