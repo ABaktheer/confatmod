@@ -47,10 +47,10 @@ eps_40_min_5 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-38-518973_avg_WA1 m
 
 
 #C40_39
-N_40_6 =  len(np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-39-2847129_avg_WA1 mm_WA2 mm_WA3 mm_max.npy'))
-N_40_max_6 = np.arange(1, N_40_6 +1, 1)
-eps_40_max_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-39-2847129_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
-eps_40_min_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-39-2847129_avg_WA1 mm_WA2 mm_WA3 mm_min.npy')
+# N_40_6 =  len(np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-39-2847129_avg_WA1 mm_WA2 mm_WA3 mm_max.npy'))
+# N_40_max_6 = np.arange(1, N_40_6 +1, 1)
+# eps_40_max_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-39-2847129_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+# eps_40_min_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-39-2847129_avg_WA1 mm_WA2 mm_WA3 mm_min.npy')
 
 plt.subplot(331)
 plt.plot(N_40_max_1[1:] /N_40_1, (abs(eps_40_max_1[1:]))/300, "k")
@@ -58,7 +58,7 @@ plt.plot(N_40_max_2[1:] /N_40_2, (abs(eps_40_max_2[1:]))/300, "k")
 plt.plot(N_40_max_3[1:] /N_40_3, (abs(eps_40_max_3[1:]))/300, "k")
 plt.plot(N_40_max_4[1:] /N_40_4, (abs(eps_40_max_4[1:])-0.15)/300, "r")
 plt.plot(N_40_max_5[1:] /N_40_5, (abs(eps_40_max_5[1:]))/300, "g")
-plt.plot(N_40_max_6[1:] /N_40_6, (abs(eps_40_max_6[1:])-0.15)/300, "b")
+#plt.plot(N_40_max_6[1:] /N_40_6, (abs(eps_40_max_6[1:])-0.15)/300, "b")
 
 
 plt.ylim(0.001, 0.0045)
@@ -123,12 +123,12 @@ plt.ylim(0.001, 0.004)
 
 
 #Smax=0.75
-N_40_1 = np.array([6094, 29009, 21018, 13356, 16960, 10606, 55140, 47806, 37864 ])
-S_40_1 = np.array([0.75,  0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75  ])
+N_40_1 = np.array([6094, 29009, 21018, 13356, 16960, 10606, 55140, 47806, 37864, 64158, 43389 ])
+S_40_1 = np.array([0.75,  0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75])
 
 #Smax=0.65
-N_40_2 = np.array([181366, 61761, 122674, 18043, 173249, 133530, 854634, 518973, 2847129])
-S_40_2 = np.array([0.65,  0.65, 0.65, 0.65,  0.65, 0.65, 0.65,  0.65, 0.65   ])
+N_40_2 = np.array([181366, 61761, 122674, 18043, 173249, 133530, 854634, 518973, 2847129, 2869494, 4867922 , 640684])
+S_40_2 = np.array([0.65,  0.65, 0.65, 0.65,  0.65, 0.65, 0.65,  0.65, 0.65, 0.65,  0.65, 0.65   ])
 
 # average
 N_40_3 = np.array([np.average(N_40_1) , np.average(N_40_2)])

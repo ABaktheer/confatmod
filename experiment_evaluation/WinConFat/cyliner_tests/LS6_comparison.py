@@ -19,12 +19,18 @@ import numpy as np
 #===================================================================================
 # comparison
 # H-L
-HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.57, 2.67, 2.78])
-HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15,  0.305,  0.305, 0.89 ])
+# HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.57, 2.67, 2.78])
+# HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15,  0.305,  0.305, 0.89 ])
+
+HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.14, 0.66, 0.69, 0.92, 0.70])
+HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.16, 0.16 , 0.47, 0.47, 0.47  ])
 
 # L-H
-LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053])
-LH_C40_2  = np.array([0.66, 1.02, 0.50, 1.23, 1.67, 2.38])
+# LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053])
+# LH_C40_2  = np.array([0.66, 1.02, 0.50, 1.23, 1.67, 2.38])
+
+LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053, 0.13, 0.13, 0.18, 0.18, 0.18])
+LH_C40_2  = np.array([0.66, 1.02, 0.50, 1.23, 1.67, 2.38, 1.51, 1.39, 0.82, 0.84, 0.35])
 
 #===================================================================================================================================================================
 "#C80"
@@ -95,14 +101,14 @@ LH_BAK_2 = np.array([1.00, 0.95, 0.90, 0.86, 0.81, 0.76, 0.71, 0.67, 0.62, 0.44,
 
 #=================================================================
 plt.subplot(131)
-plt.plot(HL_C40_1, HL_C40_2, 'r^', markersize=5, color='r')
-plt.plot(LH_C40_1, LH_C40_2, 'g^', markersize=5, color='g')
+plt.plot(HL_C40_1, HL_C40_2, 'ro', markersize=5, color='r')
+plt.plot(LH_C40_1, LH_C40_2, 'go', markersize=5, color='g')
 
 plt.plot(HL_C80_1, HL_C80_2, 'rs', markersize=5, color='r')
 plt.plot(LH_C80_1, LH_C80_2, 'gs', markersize=5, color='g')
 
-#plt.plot(HL_HOL_1, HL_HOL_2, 'ro', markersize=5, color='r')
-#plt.plot(LH_HOL_1, LH_HOL_2, 'go', markersize=5, color='g')
+plt.plot(HL_HOL_1, HL_HOL_2, 'r^', markersize=5, color='r')
+plt.plot(LH_HOL_1, LH_HOL_2, 'g^', markersize=5, color='g')
 
 plt.plot(HL_MAY_1, HL_MAY_2, color='r')
 plt.plot(LH_MAY_1, LH_MAY_2, color='g')
@@ -110,7 +116,7 @@ plt.plot(LH_MAY_1, LH_MAY_2, color='g')
 plt.plot(PM_1, PM_2,  color='k',)
 
 plt.ylim(0, 3.6)
-plt.xlim(0, 3.0)
+plt.xlim(0, 2.2)
 plt.title('sequence effect')
 plt.xlabel('L')
 plt.ylabel('H')
@@ -118,14 +124,14 @@ plt.ylabel('H')
 
 #====================================================================
 plt.subplot(132)
-plt.plot(HL_C40_1, HL_C40_2, 'r^', markersize=5, color='r')
-plt.plot(LH_C40_1, LH_C40_2, 'g^', markersize=5, color='g')
+plt.plot(HL_C40_1, HL_C40_2, 'ro', markersize=5, color='r')
+plt.plot(LH_C40_1, LH_C40_2, 'go', markersize=5, color='g')
 
 plt.plot(HL_C80_1, HL_C80_2, 'rs', markersize=5, color='r')
 plt.plot(LH_C80_1, LH_C80_2, 'gs', markersize=5, color='g')
 
-plt.plot(HL_HOL_1, HL_HOL_2, 'ro', markersize=5, color='r')
-plt.plot(LH_HOL_1, LH_HOL_2, 'go', markersize=5, color='g')
+plt.plot(HL_HOL_1, HL_HOL_2, 'r^', markersize=5, color='r')
+plt.plot(LH_HOL_1, LH_HOL_2, 'g^', markersize=5, color='g')
 
 plt.plot(HL_SHA_1, HL_SHA_2, color='r')
 plt.plot(LH_SHA_1, LH_SHA_2, color='g')
@@ -133,7 +139,7 @@ plt.plot(LH_SHA_1, LH_SHA_2, color='g')
 plt.plot(PM_1, PM_2,  color='k',)
 
 plt.ylim(0, 3.6)
-plt.xlim(0, 3.0)
+plt.xlim(0, 2.2)
 plt.title('sequence effect')
 plt.xlabel('L')
 plt.ylabel('H')
@@ -141,14 +147,14 @@ plt.ylabel('H')
 
 #====================================================================
 plt.subplot(133)
-plt.plot(HL_C40_1, HL_C40_2, 'r^', markersize=5, color='r')
-plt.plot(LH_C40_1, LH_C40_2, 'g^', markersize=5, color='g')
+plt.plot(HL_C40_1, HL_C40_2, 'ro', markersize=5, color='r')
+plt.plot(LH_C40_1, LH_C40_2, 'go', markersize=5, color='g')
 
 plt.plot(HL_C80_1, HL_C80_2, 'rs', markersize=5, color='r')
 plt.plot(LH_C80_1, LH_C80_2, 'gs', markersize=5, color='g')
 
-plt.plot(HL_HOL_1, HL_HOL_2, 'ro', markersize=5, color='r')
-plt.plot(LH_HOL_1, LH_HOL_2, 'go', markersize=5, color='g')
+plt.plot(HL_HOL_1, HL_HOL_2, 'r^', markersize=5, color='r')
+plt.plot(LH_HOL_1, LH_HOL_2, 'g^', markersize=5, color='g')
 
 plt.plot(HL_BAK_1, HL_BAK_2, color='r')
 plt.plot(LH_BAK_1, LH_BAK_2, color='g')
@@ -156,7 +162,7 @@ plt.plot(LH_BAK_1, LH_BAK_2, color='g')
 plt.plot(PM_1, PM_2,  color='k',)
 
 plt.ylim(0, 3.6)
-plt.xlim(0, 3.0)
+plt.xlim(0, 2.2)
 plt.title('sequence effect')
 plt.xlabel('L')
 plt.ylabel('H')

@@ -56,39 +56,10 @@ eps_max_4 = np.hstack((eps_max_high_4 ,  eps_max_low_4)) -0.061
 
 
 
-#=============================================
-''' H-L (S= 0.75 -0.65) (CT_40_43) '''
-#=============================================
-eps_max_5 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-43-318066_avg_WA1 mm_WA2 mm_WA3 mm_max.npy') - 0.092
-N_5 =  len(eps_max_5) 
-N_max_5 = np.arange(1, N_5 +1, 1) 
-
-
-#=============================================
-''' H-L (S= 0.75 -0.65) (CT_40_44) '''
-#=============================================
-
-
-
-#=============================================
-''' H-L (S= 0.75 -0.65) (CT_40_46) '''
-#=============================================
-eps_max_high_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-46_high_000-1099604_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
-eps_max_low_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-46_high_1099604-1542589_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
-N_6 =  len(eps_max_high_6) + len(eps_max_low_6 ) 
-N_max_6 = np.arange(1, N_6 +1, 1)
-eps_max_6 = np.hstack((eps_max_high_6 ,  eps_max_low_6))
-
-
-
 n_01 = 4043
 n_02 = 4043
 n_03 = 4043
 n_04 = 4043
-
-n_05 = 8087
-
-n_06 = 23468
 
 
 n_hf = 26428.0
@@ -107,11 +78,87 @@ N_03 = np.hstack(
 N_04 = np.hstack(
     (N_max_4[0:n_04 + 1] / n_hf, n_04 / n_hf + (N_max_4[n_04 + 1:] - N_max_4[n_04]) / n_lf))
 
+
+
+
+
+#=============================================
+''' H-L (S= 0.75 -0.65) (CT_40_43) '''
+#=============================================
+eps_max_high_5 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-43-318066_avg_WA1 mm_WA2 mm_WA3 mm_max.npy') - 0.092
+N_5 =  len(eps_max_high_5) 
+N_max_5 = np.arange(1, N_5 +1, 1)
+eps_max_5 = np.hstack((eps_max_high_5))
+
+#=============================================
+''' H-L (S= 0.75 -0.65) (CT_40_44) '''
+#=============================================
+eps_max_high_6 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-44_00-1463573Zykl_avg_WA1 mm_WA2 mm_WA3 mm_max.npy') 
+N_6 =  len(eps_max_high_6) 
+N_max_6 = np.arange(1, N_6 +1, 1)
+eps_max_6 = np.hstack((eps_max_high_6))
+
+
+
+
+#=============================================
+''' H-L (S= 0.75 -0.65) (CT_40_46) '''
+#=============================================
+eps_max_high_7 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-46_high_000-1099604_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+eps_max_low_7 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-46_high_1099604-1542589_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+N_7 =  len(eps_max_high_7) + len(eps_max_low_7 ) 
+N_max_7 = np.arange(1, N_7 +1, 1)
+eps_max_7 = np.hstack((eps_max_high_7 ,  eps_max_low_7))
+
+#=============================================
+''' H-L (S= 0.75 -0.65) (CT_40_47) '''
+#=============================================
+eps_max_high_8 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-47_low&high_0-2072915_avg_WA1 mm_WA2 mm_WA3 mm_max.npy') -0.065
+N_8 =  len(eps_max_high_8) 
+N_max_8 = np.arange(1, N_8 +1, 1)
+eps_max_8 = np.hstack((eps_max_high_8))
+
+
+
+#=============================================
+''' H-L (S= 0.75 -0.65) (CT_40_48) '''
+#=============================================
+eps_max_high_9 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-48_high_0-23468_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+eps_max_low_9 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-48_high_23468-1571981_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+N_9 =  len(eps_max_high_9) + len(eps_max_low_9) 
+N_max_9 = np.arange(1, N_9 +1, 1)
+eps_max_9 = np.hstack((eps_max_high_9 ,  eps_max_low_9)) -0.09
+
+
+
+
+
+
+n_05 = 8087
+n_06 = 8087
+n_07 = 23468
+n_08 = 23468
+n_09 = 23468
+
+n_hf = 49671.0
+n_lf = 2217025.0
+
 N_05 = np.hstack(
     (N_max_5[0:n_05 + 1] / n_hf, n_05 / n_hf + (N_max_5[n_05 + 1:] - N_max_5[n_05]) / n_lf))
-
 N_06 = np.hstack(
     (N_max_6[0:n_06 + 1] / n_hf, n_06 / n_hf + (N_max_6[n_06 + 1:] - N_max_6[n_06]) / n_lf))
+
+N_07 = np.hstack(
+    (N_max_7[0:n_07 + 1] / n_hf, n_07 / n_hf + (N_max_7[n_07 + 1:] - N_max_7[n_07]) / n_lf))
+
+N_08 = np.hstack(
+    (N_max_8[0:n_08 + 1] / n_hf, n_08 / n_hf + (N_max_8[n_08 + 1:] - N_max_8[n_08]) / n_lf))
+
+N_09 = np.hstack(
+    (N_max_9[0:n_09 + 1] / n_hf, n_09 / n_hf + (N_max_9[n_09 + 1:] - N_max_9[n_09]) / n_lf))
+
+
+
 #========================================
 # Plotting
 #========================================
@@ -119,14 +166,17 @@ N_06 = np.hstack(
 
 plt.subplot(331)
 plt.plot(N_01[2:], abs(eps_max_1[2:])/300, "k")
-plt.plot(N_02[2:], abs(eps_max_2[2:])/300, "r")
-plt.plot(N_03[2:], abs(eps_max_3[2:])/300, "g")
-plt.plot(N_04[2:], abs(eps_max_4[2:])/300, "b")
-plt.plot(N_05[2:], abs(eps_max_5[2:])/300, "y")
-plt.plot(N_06[2:], abs(eps_max_6[2:])/300, "m")
+plt.plot(N_02[2:], abs(eps_max_2[2:])/300, "k")
+plt.plot(N_03[2:], abs(eps_max_3[2:])/300, "k")
+plt.plot(N_04[2:], abs(eps_max_4[2:])/300, "k")
+plt.plot(N_05[2:], abs(eps_max_5[2:])/300, "b")
+plt.plot(N_06[2:], abs(eps_max_6[2:])/300, "b")
+plt.plot(N_07[2:], abs(eps_max_7[2:])/300, "r")
+plt.plot(N_08[2:], abs(eps_max_8[2:])/300, "r")
+plt.plot(N_09[2:], abs(eps_max_9[2:])/300, "r")
 
 plt.ylim(0.001, 0.0035)
-plt.xlim(-0.1 , 3.7 )
+plt.xlim(-0.1 , 2.0 )
 
 
 
@@ -214,20 +264,102 @@ N_06 = np.hstack(
     (N_max_6[0:n_06 + 1] / n_lf, n_06 / n_lf + (N_max_6[n_06 + 1:] - N_max_6[n_06]) / n_hf))
 
 
+
+
+#=============================================
+''' L-H (S= 0.75 -0.65) (CT_40_56) '''
+#=============================================
+eps_max_high_7 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-56_low_281382_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+eps_max_low_7 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-56_high_281382_356224_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+N_7 =  len(eps_max_high_7) + len(eps_max_low_7 ) 
+N_max_7 = np.arange(1, N_7 +1, 1)
+eps_max_7 = np.hstack((eps_max_high_7 ,  eps_max_low_7)) -0.083
+
+
+#=============================================
+''' L-H (S= 0.75 -0.65) (CT_40_57) '''
+#=============================================
+eps_max_8 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-57_low&high_350247_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')-0.25
+N_8 =  len(eps_max_8) 
+N_max_8 = np.arange(1, N_8 +1, 1)
+
+
+
+#=============================================
+''' L-H (S= 0.75 -0.65) (CT_40_58) '''
+#=============================================
+eps_max_9 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-58_lowhigh 454099_avg_WA1 mm_WA2 mm_WA3 mm_max.npy') - 0.15
+N_9 =  len(eps_max_9) 
+N_max_9 = np.arange(1, N_9 +1, 1)
+
+
+#=============================================
+''' L-H (S= 0.75 -0.65) (CT_40_59) '''
+#=============================================
+eps_max_10 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-59_lowhigh_000-450805_avg_WA1 mm_WA2 mm_WA3 mm_max.npy')
+N_10 =  len(eps_max_10) 
+N_max_10 = np.arange(1, N_10 +1, 1)
+
+
+#=============================================
+''' L-H (S= 0.75 -0.65) (CT_40_60) '''
+#=============================================
+eps_max_11 = np.load( r'D:\Heimarbeit\Rohedata\C40\NPY\C40-60_lowhigh_000-426683_avg_WA1 mm_WA2 mm_WA3 mm_max.npy') - 0.717
+N_11 =  len(eps_max_11) 
+N_max_11 = np.arange(1, N_11 +1, 1)
+
+
+
+n_07 = 281382
+n_08 = 281382
+n_09 = 409280
+n_10 = 409280
+n_11 = 409280
+
+
+n_hf = 49671.0
+n_lf = 2217025.0
+
+# normalized accumulative damage
+
+N_07 = np.hstack(
+    (N_max_7[0:n_07 + 1] / n_lf, n_07 / n_lf + (N_max_7[n_07 + 1:] - N_max_7[n_07]) / n_hf))
+N_08 = np.hstack(
+    (N_max_8[0:n_08 + 1] / n_lf, n_08 / n_lf + (N_max_8[n_08 + 1:] - N_max_8[n_08]) / n_hf))
+N_09 = np.hstack(
+    (N_max_9[0:n_09 + 1] / n_lf, n_09 / n_lf + (N_max_9[n_09 + 1:] - N_max_9[n_09]) / n_hf))
+N_10 = np.hstack(
+    (N_max_10[0:n_10 + 1] / n_lf, n_10 / n_lf + (N_max_10[n_10 + 1:] - N_max_10[n_10]) / n_hf))
+N_11 = np.hstack(
+    (N_max_11[0:n_11 + 1] / n_lf, n_11 / n_lf + (N_max_11[n_11 + 1:] - N_max_11[n_11]) / n_hf))
+
+
+
+
+
+
+
+
+
+
 #========================================
 # Plotting
 #========================================
 plt.subplot(332)
 plt.plot(N_01[2:], abs(eps_max_1[2:])/300, "k")
-plt.plot(N_02[2:], abs(eps_max_2[2:])/300, "r")
-plt.plot(N_03[2:], abs(eps_max_3[2:])/300, "b")
-plt.plot(N_04[2:], abs(eps_max_4[2:])/300, "g")
-plt.plot(N_05[2:], abs(eps_max_5[2:])/300, "y")
-plt.plot(N_06[2:], abs(eps_max_6[2:])/300, "m")
-
+plt.plot(N_02[2:], abs(eps_max_2[2:])/300, "k")
+plt.plot(N_03[2:], abs(eps_max_3[2:])/300, "k")
+plt.plot(N_04[2:], abs(eps_max_4[2:])/300, "k")
+plt.plot(N_05[2:], abs(eps_max_5[2:])/300, "k")
+plt.plot(N_06[2:], abs(eps_max_6[2:])/300, "k")
+plt.plot(N_07[2:], abs(eps_max_7[2:])/300, "b")
+plt.plot(N_08[2:], abs(eps_max_8[2:])/300, "b")
+plt.plot(N_09[2:], abs(eps_max_9[2:])/300, "r")
+plt.plot(N_10[2:], abs(eps_max_10[2:])/300, "r")
+plt.plot(N_11[2:], abs(eps_max_11[2:])/300, "r")
 
 plt.ylim(0.001, 0.0035)
-plt.xlim(-0.1 , 3.75 )
+plt.xlim(-0.1 , 3.0 )
 
 
 
@@ -237,12 +369,18 @@ plt.xlim(-0.1 , 3.75 )
 # comparison
 
 # H-L
-HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.57, 2.67, 2.78])
-HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15,  0.305,  0.305, 0.89 ])
+# HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.57, 2.67, 2.78])
+# HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15,  0.305,  0.305, 0.89 ])
+
+HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.14, 0.66, 0.69, 0.92, 0.70])
+HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.16, 0.16 , 0.47, 0.47, 0.47  ])
 
 # L-H
-LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053])
-LH_C40_2  = np.array([0.66, 1.02, 0.50, 1.23, 1.67, 2.38])
+# LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053])
+# LH_C40_2  = np.array([0.66, 1.02, 0.50, 1.23, 1.67, 2.38])
+
+LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053, 0.13, 0.13, 0.18, 0.18, 0.18])
+LH_C40_2  = np.array([0.66, 1.02, 0.50, 1.23, 1.67, 2.38, 1.51, 1.39, 0.82, 0.84, 0.35])
 
 # average
 PM_1 = np.array([1 , 0])
@@ -254,8 +392,8 @@ plt.plot(HL_C40_1, HL_C40_2, 'ro', markersize=4, color='r')
 plt.plot(LH_C40_1, LH_C40_2, 'ro', markersize=4, color='g')
 plt.plot(PM_1, PM_2,  color='r',)
 
-plt.ylim(0, 2.8)
-plt.xlim(0, 2.8)
+plt.xlim(0, 1.2)
+plt.ylim(0, 2.5)
 plt.title('sequence effect')
 plt.xlabel('L')
 plt.ylabel('H')
@@ -263,6 +401,7 @@ plt.ylabel('H')
 
 #===================================================================================================================================================================
 "#C80"
+#===================================================================================================================================================================
 
 
 '''
@@ -506,6 +645,7 @@ plt.ylabel('H')
 
 #=================================================================================================================================================================================
 "Holmen"
+#===================================================================================================================================================================
 
 
 
@@ -569,9 +709,13 @@ plt.ylim(1, 3.5)
 HL_C40_1 = np.array([0.266, 0.39, 0.51, 0.11, 0.25])
 HL_C40_2 = np.array([0.154, 0.22, 0.24, 0.26, 0.3])
 
+
+
 # L-H
 LH_C40_1 = np.array([0.17, 0.22, 0.26, 0.29, 0.3])
 LH_C40_2  = np.array([0.86, 0.53, 0.64, 0.93, 2.1])
+
+
 
 # average
 PM_1 = np.array([1 , 0])
