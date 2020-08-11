@@ -10,14 +10,6 @@ Implementation of the fatigue model for plain concrete [A.Alliche, 2004] under u
 '''
 
 
-'''
-To do#
-
-1. model class
-2. loading scenario class (reduce repetition)
-3. improve printing
-'''
-
 import matplotlib.pyplot as plt
 import numpy as np
 import random as r
@@ -102,10 +94,9 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         Y_norm = np.sqrt((-g * eps_1_i - alpha * (eps_1_i + 2. * eps_2_i) * eps_1_i
                           - 2. * beta * (eps_1_i**2.0))**2.0 + 2.0 * (-g * eps_2_i - alpha * (eps_1_i + 2. * eps_2_i) * eps_1_i
                                                                       - 2 * beta * (eps_1_i**2.0))**2.0)
-        d_D = Y_norm  # * d_w
+        d_D = Y_norm  * d_w
         D_i += d_D
-        # print 'Y=', Y_norm
-        #print('D=', D_i)
+
 
         # Helmholtz free energy
         phi_i = 0.5 * lamda * (eps_1_i + 2.0 * eps_2_i)**2.0 + mu * ((eps_1_i)**2.0 + 2.0 * eps_2_i**2.0) + 2.0 * g * w_i * eps_2_i + alpha * \
@@ -156,26 +147,25 @@ def fatigue_life(S_max, Nf_arr):
 
 def loading_scenario(m, Nf_arr_0):
     
-    #m = 50  # number of increments in each cycle
 
+    S_max_arr = [0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
+    S_min_arr = [0.00, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
 
-    load_levels = [0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95]
-
-
-    b = 1  # number_of_repeted_blocks
+    b = 5  # number_of_repeted_blocks
 
 
     sigma_u = - 120.
-
-
-    S_max_1 = np.asarray(r.sample(load_levels, 1)) * sigma_u
-    S_max_2 = np.asarray(r.sample(load_levels, 1)) * sigma_u
-    S_max_3 = np.asarray(r.sample(load_levels, 1)) * sigma_u
-    S_max_4 = np.asarray(r.sample(load_levels, 1)) * sigma_u
-    S_max_5 = np.asarray(r.sample(load_levels, 1)) * sigma_u
-    S_max_6 = np.asarray(r.sample(load_levels, 1)) * sigma_u
-    S_max_7 = np.asarray(r.sample(load_levels, 1)) * sigma_u
     
+    # random S_max
+    S_max_1 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    S_max_2 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    S_max_3 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    S_max_4 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    S_max_5 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    S_max_6 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    S_max_7 = np.asarray(r.sample(S_max_arr, 1)) * sigma_u
+    
+    # constant S_min
     S_min_1 = 0.2 * sigma_u
     S_min_2 = 0.2 * sigma_u
     S_min_3 = 0.2 * sigma_u
@@ -183,17 +173,20 @@ def loading_scenario(m, Nf_arr_0):
     S_min_5 = 0.2 * sigma_u
     S_min_6 = 0.2 * sigma_u
     S_min_7 = 0.2 * sigma_u
+    
+#     # random S_min
+#     S_min_1 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
+#     S_min_2 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
+#     S_min_3 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
+#     S_min_4 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
+#     S_min_5 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
+#     S_min_6 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
+#     S_min_7 = np.asarray(r.sample(S_min_arr, 1)) * sigma_u
 
 
-    
-    eta_ratio = [0.02, 0.04, 0.08, 0.1, 0.2, 0.5]
-    
     
     S_max_arr = np.array([S_max_1, S_max_2, S_max_3, S_max_4, S_max_5, S_max_6, S_max_7])/ sigma_u
     Nf_arr = np.array([fatigue_life(i, Nf_arr_0) for i in S_max_arr])
-    
-    #print( 'S_max_arr', S_max_arr)
-    #print( 'Nf_arr', Nf_arr)
     
     
 #     # in case of equal number of cycles
@@ -205,21 +198,31 @@ def loading_scenario(m, Nf_arr_0):
 #     n6 = 10
 #     n7 = 10
     
+#     #using specific ratio
+#     eta_ratio = [0.02, 0.04, 0.08, 0.1, 0.2]
+#  
+#     n1 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[0])
+#     n2 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[1])
+#     n3 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[2])
+#     n4 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[3])
+#     n5 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[4])
+#     n6 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[5])
+#     n7 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[6])
     
-    n1 = np.int( np.asarray(r.sample(eta_ratio, 1)) * Nf_arr[0])
-    n2 = np.int( np.asarray(r.sample(eta_ratio, 1))[0] * Nf_arr[1])
-    n3 = np.int( np.asarray(r.sample(eta_ratio, 1))[0] * Nf_arr[2])
-    n4 = np.int( np.asarray(r.sample(eta_ratio, 1))[0] * Nf_arr[3])
-    n5 = np.int( np.asarray(r.sample(eta_ratio, 1))[0] * Nf_arr[4])
-    n6 = np.int( np.asarray(r.sample(eta_ratio, 1))[0] * Nf_arr[5])
-    n7 = np.int( np.asarray(r.sample(eta_ratio, 1))[0] * Nf_arr[6])
+    # using ratio in range 
+    eta_1 = 0.02
+    eta_2 = 0.2
     
-    N_arr = np.array([n1, n2, n3, n4, n5, n6, n7])
+    n1 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[0])
+    n2 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[1])
+    n3 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[2])
+    n4 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[3])
+    n5 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[4])
+    n6 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[5])
+    n7 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[6])
     
-    #print('N_arr ', N_arr )
 
-    b = 10  # number_of_repeted_blocks
-
+    
     d_0 = np.zeros(1)
 
     d_1 = np.linspace(0, S_max_1, n1 * 2)
@@ -305,52 +308,68 @@ def loading_scenario(m, Nf_arr_0):
         sigma_arr = np.hstack((sigma_arr, sig_7_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr, sig_2_3_arr,
                                sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr,
                                sig_5_6_arr, sig_6_arr, sig_6_7_arr, sig_7_arr))
-
-
-#         # for repeating (H-L-H) or (L-H-L)
-#         if int(i) % 2 == 0:
-#             # print 'even'
-#             sigma_arr = np.hstack(
-#                 (sigma_arr, sig_6_1_arr, sig_1_arr, sig_1_2_arr, sig_2_arr, sig_2_3_arr, sig_3_arr, sig_3_4_arr, sig_4_arr, sig_4_5_arr, sig_5_arr, sig_5_6_arr, sig_6_arr))
-#         else:
-#             # print 'odd'
-#             sigma_arr = np.hstack(
-#                 (sigma_arr, sig_6_6_arr, sig_6_arr, sig_5_6_arr, sig_5_arr, sig_4_5_arr, sig_4_arr, sig_3_4_arr, sig_3_arr, sig_2_3_arr, sig_2_arr, sig_1_2_arr, sig_1_arr))
-
-    #print(sigma_arr)
-
-
-    t_arr = np.linspace(0, 1, len(sigma_arr))
-    
-    
     
     
     return sigma_arr 
 
 
 
-def get_eta(m, N_f_all, sigma_u, Nf_arr_0):
+def get_eta(m, N_f_all, sigma_u, Nf_arr_0, sigma_arr):
     
     eta=0
     for i in range(0, np.int(N_f_all)):
         idx = m + 2 * i * m 
         S_max_i = sigma_arr [idx] / sigma_u
-        #print('S_max_i', S_max_i)
+ 
         eta += 1.0 / fatigue_life(S_max_i, Nf_arr_0) 
 
     print('eta****************: ', eta  )
     return eta 
     
     
+    
+def get_DS(m, N_f_all, sigma_u, sigma_arr):
+    
+    DS = 0
+    abs_DS = 0
+    
+    S_max_i = np.zeros((np.int(N_f_all)))
+    for i in range(1, np.int(N_f_all)):
+        idx = m + 2 * i * m 
+        S_max_i[0] = sigma_arr [m] / sigma_u
+        S_max_i[i] = sigma_arr [idx] / sigma_u
+        
+        DS += (S_max_i[i-1] - S_max_i[i])
+        abs_DS += np.abs(S_max_i[i] - S_max_i[i-1])
+        
+    return DS, abs_DS   
+
+def get_Sm(m, N_f_all, sigma_u, sigma_arr):
+    
+
+    Sm = np.zeros((np.int(N_f_all)))
+    for i in range(1, np.int(N_f_all)):
+        idx_max = m + 2 * i * m 
+        idx_min =  2 * i * m 
+        Sm[i]  = ((sigma_arr [idx_max] / sigma_u)+(sigma_arr [idx_min] / sigma_u)) / 2.0
+
+
+    #print('Sm****************: ', np.average(Sm)  )
+    return np.average(Sm)
+    
 if __name__ == '__main__':
 
-    n= 2
+    n= 51
     etas = np.zeros([n])
+    DS = np.zeros([n])
+    abs_DS = np.zeros([n])
+    Sm = np.zeros([n])
     for i in range (1, n):
         print('sample:', i)
     
         m = 50
         sigma_u = -120.
+    
         
         Nf_065 = 108600.
         Nf_070 = 29424.
@@ -373,31 +392,37 @@ if __name__ == '__main__':
         
         N_f_all = inc /(m * 2.0)
         
-        eta = get_eta(m, N_f_all, sigma_u, Nf_arr_0)
+        eta = get_eta(m, N_f_all, sigma_u, Nf_arr_0, sigma_arr)
         
         etas[i] = eta
+        
+        
+        DS[i]= get_DS(m, N_f_all, sigma_u, sigma_arr)[0]
+        abs_DS[i]= get_DS(m, N_f_all, sigma_u, sigma_arr)[1]
+        
+        Sm[i]= get_Sm(m, N_f_all, sigma_u, sigma_arr)
     
-    print(etas)
     
     
     plt.subplot(221)
-    
     x = np.arange(1, len(etas) +1)
-    plt.plot(x, etas, 'ro', markersize=5, color='k')
-
-
-#     sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, inc = get_stress_strain(
-# sigma_arr, lamda=13972.2, mu=20958.3, alpha=2237.5, beta=-2216.5,
-# g=-10.0, C0=0.00, C1=0.00188, K=0.003345, n=10)
+    plt.plot(x[1:], etas[1:], 'ro', markersize=5, color='k')
 
 
 
     plt.subplot(222)
-    ax = sns.distplot(etas,
+    ax = sns.distplot(etas[1:],
                   bins=100,
                   color='blue',
                   hist_kws={"linewidth": 15,'alpha':1})
     ax.set(xlabel='Normal Distribution', ylabel='Frequency')
+    
+    
+    plt.subplot(223)
+    plt.plot(DS[1:], etas[1:], 'ro', markersize=5, color='k')
+    
+    plt.subplot(224)
+    plt.plot(Sm[1:], etas[1:], 'ro', markersize=5, color='k')
 
 
     plt.show()     

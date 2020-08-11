@@ -41,7 +41,7 @@ plt.ylim(0.0, 100)
 #======================================================================================
 r = [0,1,2]
 
-raw_data = {'greenBars': [2, 2, 0], 'orangeBars': [0, 1, 0],'blueBars': [3, 7, 5]}
+raw_data = {'greenBars': [2, 3, 0], 'orangeBars': [0, 2, 0],'blueBars': [3, 8, 5]}
 
 df = pd.DataFrame(raw_data)
  
