@@ -63,7 +63,7 @@ def get_stress_strain(sig_arr, sig_0, E, K, gamma, S, c, r, m):
 #                                               (Y_i / S) ** r)
 
             w_i = w_i + ((1.0 - w_i) ** c) * (delta_lamda * (Y_i / S) ** r) * \
-                (np.exp(-35.0 * w_i) + np.exp(-10.0 * (1. - w_i)))
+                (np.exp(-30.0 * w_i) + np.exp(-15.0 * (1. - w_i)))
 
             eps_i = sig_i / (E * (1.0 - w_i)) + eps_p_i
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
                            for i in range(len(s_levels) - 1)])
 
     # fatigue loading
-    sig_max = 85.5
+    sig_max = 100.5
     sig_min = 10
     cycles = 10000
     s_levels_2 = np.linspace(0, 70, cycles)
@@ -196,7 +196,7 @@ if __name__ == '__main__':
 
     ax4.plot(eps_p_cum_1[0:i1], w_arr_1[0:i1], '--k', linewidth=1,
              label='$ \sigma_N = 0$ MPa', alpha=1)
-    ax4.plot(eps_pi_cum_2[0:i2], w_arr_2[0:i2], 'r', linewidth=1,
+    ax4.plot(eps_pi_cum_2[0:i2+1], w_arr_2[0:i2+1], 'r', linewidth=1,
              label='$ \sigma_N = 0$ MPa', alpha=1)
 
     plt.xlabel('Cumulative sliding(mm)')
