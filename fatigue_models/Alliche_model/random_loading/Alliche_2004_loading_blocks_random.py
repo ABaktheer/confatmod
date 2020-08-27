@@ -186,6 +186,9 @@ def loading_scenario(m, Nf_arr_0):
 
     
     S_max_arr = np.array([S_max_1, S_max_2, S_max_3, S_max_4, S_max_5, S_max_6, S_max_7])/ sigma_u
+    #print('S_max_arr', S_max_arr)
+    
+    
     Nf_arr = np.array([fatigue_life(i, Nf_arr_0) for i in S_max_arr])
     
     
@@ -221,7 +224,11 @@ def loading_scenario(m, Nf_arr_0):
     n6 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[5])
     n7 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[6])
     
-
+    n_arr = np.array([n1, n2, n3, n4, n5, n6, n7])
+    #print('n_arr', n_arr)
+    
+    eta_arr = n_arr/Nf_arr
+    #print('eta_arr', eta_arr)
     
     d_0 = np.zeros(1)
 
@@ -310,7 +317,7 @@ def loading_scenario(m, Nf_arr_0):
                                sig_5_6_arr, sig_6_arr, sig_6_7_arr, sig_7_arr))
     
     
-    return sigma_arr 
+    return sigma_arr,  S_max_arr, eta_arr
 
 
 
@@ -351,7 +358,7 @@ def get_Sm(m, N_f_all, sigma_u, sigma_arr):
     for i in range(1, np.int(N_f_all)):
         idx_max = m + 2 * i * m 
         idx_min =  2 * i * m 
-        Sm[i]  = ((sigma_arr [idx_max] / sigma_u)+(sigma_arr [idx_min] / sigma_u)) / 2.0
+        Sm[i]  = ((sigma_arr [idx_max] / sigma_u) + (sigma_arr [idx_min] / sigma_u)) / 2.0
 
 
     #print('Sm****************: ', np.average(Sm)  )
@@ -359,11 +366,18 @@ def get_Sm(m, N_f_all, sigma_u, sigma_arr):
     
 if __name__ == '__main__':
 
-    n= 51
+    n= 1501
+    
     etas = np.zeros([n])
     DS = np.zeros([n])
     abs_DS = np.zeros([n])
     Sm = np.zeros([n])
+    
+    S_max_mean = np.zeros([n])
+    S_max_std = np.zeros([n])
+    eta_mean = np.zeros([n])
+    eta_std = np.zeros([n])
+    
     for i in range (1, n):
         print('sample:', i)
     
@@ -382,7 +396,7 @@ if __name__ == '__main__':
         Nf_arr_0 = np.array([Nf_065, Nf_070, Nf_075, Nf_080, Nf_085, Nf_090, Nf_095])
 
     
-        sigma_arr =  loading_scenario(m, Nf_arr_0)  
+        sigma_arr, S_max_arr, eta_arr  =  loading_scenario(m, Nf_arr_0)  
 
     # C120
         sigma_arr, eps_1_arr, eps_2_arr, w_arr, f_arr, D_arr, inc, phi_arr = get_stress_strain(
@@ -401,30 +415,55 @@ if __name__ == '__main__':
         abs_DS[i]= get_DS(m, N_f_all, sigma_u, sigma_arr)[1]
         
         Sm[i]= get_Sm(m, N_f_all, sigma_u, sigma_arr)
+        
+        S_max_mean[i] = np.mean(S_max_arr)
+        S_max_std[i] = np.std(S_max_arr)
+        eta_mean[i] = np.mean(eta_arr)
+        eta_std[i] = np.std(eta_arr)
+        
+        
     
     
     
     plt.subplot(221)
     x = np.arange(1, len(etas) +1)
     plt.plot(x[1:], etas[1:], 'ro', markersize=5, color='k')
-
+    plt.plot(np.array([0, len(etas)]), np.array([np.mean(etas[1:]), np.mean(etas[1:])]), color='r')
+    plt.xlabel('sample')
+    plt.ylabel('$\eta$')
 
 
     plt.subplot(222)
     ax = sns.distplot(etas[1:],
-                  bins=100,
+                  bins=10,
                   color='blue',
-                  hist_kws={"linewidth": 15,'alpha':1})
+                  hist_kws={"linewidth": 15,'alpha':1},
+                  norm_hist = True)
     ax.set(xlabel='Normal Distribution', ylabel='Frequency')
     
     
     plt.subplot(223)
     plt.plot(DS[1:], etas[1:], 'ro', markersize=5, color='k')
+    plt.plot(np.array([0, len(etas)]), np.array([np.mean(etas[1:]), np.mean(etas[1:])]), color='r')
+    plt.xlabel('Delta S')
+    plt.ylabel('$\eta$')
     
     plt.subplot(224)
     plt.plot(Sm[1:], etas[1:], 'ro', markersize=5, color='k')
+    plt.plot(np.array([0, len(etas)]), np.array([np.mean(etas[1:]), np.mean(etas[1:])]), color='r')
+    plt.xlabel('Sm')
+    plt.ylabel('$\eta$')
+    
 
-
+    np.savetxt(r'H:\Heimarbeit\results_random\etas.txt', np.transpose(etas), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\DS.txt', np.transpose(DS), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\abs_DS.txt', np.transpose(abs_DS), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\Sm.txt', np.transpose(Sm), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\Smax_mean.txt', np.transpose(S_max_mean), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\eta_mean.txt', np.transpose(eta_mean), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\Smax_std.txt', np.transpose(S_max_std), delimiter=" ", fmt="%s")
+    np.savetxt(r'H:\Heimarbeit\results_random\eta_std.txt', np.transpose(eta_std), delimiter=" ", fmt="%s")
+    
     plt.show()     
 
 

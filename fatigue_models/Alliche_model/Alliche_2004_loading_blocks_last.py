@@ -137,9 +137,10 @@ if __name__ == '__main__':
 #     n4 = 164
 #     n5 = 78
 #     n6 = 600
+
 
-    n1 = 1200
-    n2 = 3000
+    n1 = 2000
+    n2 = 10
     n3 = 10
     n4 = 50
     n5 = 50
@@ -149,8 +150,9 @@ if __name__ == '__main__':
 
     sigma_u = - 120
 
-    stress_level_1_max = 0.80 * sigma_u
-    stress_level_2_max = 0.95 * sigma_u
+
+    stress_level_1_max = 0.85 * sigma_u
+    stress_level_2_max = 0.65 * sigma_u
     stress_level_3_max = 0.65 * sigma_u
     stress_level_4_max = 0.65 * sigma_u
     stress_level_5_max = 0.65 * sigma_u
