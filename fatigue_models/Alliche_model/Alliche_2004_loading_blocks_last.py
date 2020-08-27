@@ -97,7 +97,7 @@ def get_stress_strain(sigma_1_arr, lamda, mu, alpha, beta, g, C0, C1, K, n):
         Y_norm = np.sqrt((-g * eps_1_i - alpha * (eps_1_i + 2. * eps_2_i) * eps_1_i
                           - 2. * beta * (eps_1_i**2.0))**2.0 + 2.0 * (-g * eps_2_i - alpha * (eps_1_i + 2. * eps_2_i) * eps_1_i
                                                                       - 2 * beta * (eps_1_i**2.0))**2.0)
-        d_D = Y_norm  # * d_w
+        d_D = Y_norm  * d_w
         D_i += d_D
         # print 'Y=', Y_norm
         #print('D=', D_i)
@@ -138,8 +138,8 @@ if __name__ == '__main__':
 #     n5 = 78
 #     n6 = 600
 
-    n1 = 100000
-    n2 = 10
+    n1 = 1200
+    n2 = 3000
     n3 = 10
     n4 = 50
     n5 = 50
@@ -149,8 +149,8 @@ if __name__ == '__main__':
 
     sigma_u = - 120
 
-    stress_level_1_max = 0.65 * sigma_u
-    stress_level_2_max = 0.65 * sigma_u
+    stress_level_1_max = 0.80 * sigma_u
+    stress_level_2_max = 0.95 * sigma_u
     stress_level_3_max = 0.65 * sigma_u
     stress_level_4_max = 0.65 * sigma_u
     stress_level_5_max = 0.65 * sigma_u
