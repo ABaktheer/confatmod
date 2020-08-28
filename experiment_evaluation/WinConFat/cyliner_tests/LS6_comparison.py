@@ -24,8 +24,8 @@ import numpy as np
 
 
 
-HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.13, 0.61, 0, 0.63, 0.85, 0.65])
-HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15,  0.16, 0.16, 0.16, 0.47, 0.47, 0.47 ])
+HL_C40_1 = np.array([0.18, 0.22, 0.26, 0.27, 0.45, 1.08, 0.13, 0.61, 0.63, 0.85, 0.65])
+HL_C40_2 = np.array([0.15, 0.15, 0.15, 0.15, 0.15, 0.15,  0.16,  0.16, 0.47, 0.47, 0.47 ])
 
 # L-H
 # LH_C40_1 = np.array([0.053, 0.053, 0.053, 0.053, 0.053, 0.053])
@@ -120,7 +120,7 @@ plt.plot(LH_MAY_1, LH_MAY_2, color='g')
 plt.plot(PM_1, PM_2,  color='k',)
 
 
-plt.ylim(0, 2.5)
+plt.ylim(0, 3.6)
 
 plt.xlim(0, 2.2)
 plt.title('sequence effect')
@@ -145,7 +145,7 @@ plt.plot(LH_SHA_1, LH_SHA_2, color='g')
 plt.plot(PM_1, PM_2,  color='k',)
 
 
-plt.ylim(0, 2.5)
+plt.ylim(0, 3.6)
 
 plt.xlim(0, 2.2)
 plt.title('sequence effect')
@@ -170,7 +170,7 @@ plt.plot(LH_BAK_1, LH_BAK_2, color='g')
 plt.plot(PM_1, PM_2,  color='k',)
 
 
-plt.ylim(0, 2.5)
+plt.ylim(0, 3.6)
 
 plt.xlim(0, 2.2)
 plt.title('sequence effect')

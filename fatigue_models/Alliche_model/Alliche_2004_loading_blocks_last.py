@@ -137,6 +137,7 @@ if __name__ == '__main__':
 #     n4 = 164
 #     n5 = 78
 #     n6 = 600
+
 
     n1 = 2000
     n2 = 10
@@ -148,6 +149,7 @@ if __name__ == '__main__':
     b = 5  # number_of_repeted_blocks
 
     sigma_u = - 120
+
 
     stress_level_1_max = 0.85 * sigma_u
     stress_level_2_max = 0.65 * sigma_u
