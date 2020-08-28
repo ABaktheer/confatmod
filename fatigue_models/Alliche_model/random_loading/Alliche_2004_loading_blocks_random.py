@@ -366,7 +366,7 @@ def get_Sm(m, N_f_all, sigma_u, sigma_arr):
     
 if __name__ == '__main__':
 
-    n= 1501
+    n= 3001
     
     etas = np.zeros([n])
     DS = np.zeros([n])
