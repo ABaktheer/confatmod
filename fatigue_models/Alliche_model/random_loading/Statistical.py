@@ -11,17 +11,17 @@ from scipy.stats import pearsonr
 # experimental (monotonic)
 #=========================
 etas = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples\etas.txt')
+    r'H:\Heimarbeit\results_random\3000 samples_2\etas.txt')
 DS = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples\DS.txt')
+    r'H:\Heimarbeit\results_random\3000 samples_2\DS.txt')
 abs_DS = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples\abs_DS.txt')
+    r'H:\Heimarbeit\results_random\3000 samples_2\abs_DS.txt')
 Sm = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples\Sm.txt')
+    r'H:\Heimarbeit\results_random\3000 samples_2\Sm.txt')
 
 
-Smax_mean = np.loadtxt(r'H:\Heimarbeit\results_random\3000 samples\Smax_mean.txt')
-eta_mean = np.loadtxt(r'H:\Heimarbeit\results_random\3000 samples\eta_mean.txt')
+Smax_mean = np.loadtxt(r'H:\Heimarbeit\results_random\3000 samples_2\Smax_mean.txt')
+eta_mean = np.loadtxt(r'H:\Heimarbeit\results_random\3000 samples_2\eta_mean.txt')
 
 #================================================
 # plot

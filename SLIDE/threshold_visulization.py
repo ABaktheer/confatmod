@@ -11,8 +11,11 @@ import matplotlib.pyplot as plt
 import numpy as np
   
 m = np.linspace(0, 1, 6)
+
+m = np.array([0, 0.5, 1.0, 2.0])
+
 f = np.zeros_like(m)
-tau_bar = 2.5
+tau_bar = 5
   
 for i in np.arange(0, len(m)):  
 #tau = np.linspace(-10, 10, 100)

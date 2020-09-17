@@ -214,7 +214,7 @@ def loading_scenario(m, Nf_arr_0):
     
     # using ratio in range 
     eta_1 = 0.02
-    eta_2 = 0.2
+    eta_2 = 0.1
     
     n1 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[0])
     n2 = np.int( np.asarray(r.uniform(eta_1, eta_2)) * Nf_arr[1])
