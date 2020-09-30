@@ -11,17 +11,17 @@ from scipy.stats import pearsonr
 # experimental (monotonic)
 #=========================
 etas = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples_2\etas.txt')
+    r'H:\Heimarbeit\results_random\1500 samples_3\etas.txt')
 DS = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples_2\DS.txt')
+    r'H:\Heimarbeit\results_random\1500 samples_3\DS.txt')
 abs_DS = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples_2\abs_DS.txt')
+    r'H:\Heimarbeit\results_random\1500 samples_3\abs_DS.txt')
 Sm = np.loadtxt(
-    r'H:\Heimarbeit\results_random\3000 samples_2\Sm.txt')
+    r'H:\Heimarbeit\results_random\1500 samples_3\Sm.txt')
 
 
-Smax_mean = np.loadtxt(r'H:\Heimarbeit\results_random\3000 samples_2\Smax_mean.txt')
-eta_mean = np.loadtxt(r'H:\Heimarbeit\results_random\3000 samples_2\eta_mean.txt')
+Smax_mean = np.loadtxt(r'H:\Heimarbeit\results_random\1500 samples_3\Smax_mean.txt')
+eta_mean = np.loadtxt(r'H:\Heimarbeit\results_random\1500 samples_3\eta_mean.txt')
 
 #================================================
 # plot
@@ -101,15 +101,6 @@ plt.subplot(335)
 #plt.plot(abs_DS[1:], etas[1:], 'ro', markersize=3, color='k')
 plt.plot(Smax_mean[1:], etas[1:], 'ro', markersize=3, color='k', alpha=0.5)
 
-#ax = sns.regplot(Smax_mean[1:], etas[1:], marker='o', color='black', scatter_kws={'s':3})
-
-# ax = sns.distplot(Smax_mean[1:],
-#               bins=100,
-#               color='blue',
-#               hist_kws={"linewidth": 1,'alpha':0.5},
-#               norm_hist = True)
-
-#plt.plot(np.array([0, len(etas)]), np.array([np.mean(etas[1:]), np.mean(etas[1:])]), color='r')
 
 m, b = np. polyfit(Smax_mean[1:], etas[1:], 1) 
 plt.plot(Smax_mean[1:], m*Smax_mean[1:] + b , color='r') 
