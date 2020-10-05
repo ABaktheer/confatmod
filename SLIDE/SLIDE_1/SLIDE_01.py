@@ -97,20 +97,20 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
             
             f_pi = np.fabs(tau_i/(1.0 - w_i) - gamma * alpha_i) - \
             tau_pi_bar - K * z_i + m* sigma_n
-            
-            print('f_pi=', f_pi)
-
-            alpha_i +=  delta_lamda * \
-                np.sign(tau_i/(1.0 - w_i) - gamma * alpha_i)
-                
-            z_i +=  delta_lamda
-            
-            s_pi_cum_i +=  delta_lamda / (1 - w_i)
-            
-            f_i = np.fabs(E_b * (s_i - s_pi_i) - gamma * alpha_i) - \
-            tau_pi_bar - K * z_i + m * sigma_n
-            
-            print('f=', f)
+#             
+#             print('f_pi=', f_pi)
+#             
+#             alpha_i +=  delta_lamda * \
+#                 np.sign(tau_i/(1.0 - w_i) - gamma * alpha_i)
+#                 
+#             z_i +=  delta_lamda
+#             
+#             s_pi_cum_i +=  delta_lamda / (1 - w_i)
+#             
+#             f_i = np.fabs(E_b * (s_i - s_pi_i) - gamma * alpha_i) - \
+#             tau_pi_bar - K * z_i + m * sigma_n
+#             
+#             print('f=', f)
 
 
         tau_max_i = np.fabs(tau_i)
@@ -127,87 +127,98 @@ def get_bond_slip(s_arr, tau_pi_bar, K, gamma, E_b, S, c, r, m, sigma_n):
 
 
 if __name__ == '__main__':
-    s_levels = np.linspace(0, 1.5, 40)
+    s_levels = np.linspace(0, 0.05, 2)
     s_levels[0] = 0
     s_levels.reshape(-1, 2)[:, 0] *= -1
     # s_levels.reshape(-1, 2)[:, 1] = 2
     s_history = s_levels.flatten()
 
     # slip array as input
-    s_arr_1 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 2)
+    s_arr_1 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 100)
                          for i in range(len(s_levels) - 1)])
 
-    s_arr_2 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 20)
-                         for i in range(len(s_history) - 1)])
+#     s_arr_2 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 200)
+#                          for i in range(len(s_history) - 1)])
+# 
+#     s_arr_3 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 200)
+#                          for i in range(len(s_history) - 1)])
+# 
+#     s_arr_4 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 200)
+#                          for i in range(len(s_history) - 1)])
+#     
+#     s_arr_5 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 200)
+#                          for i in range(len(s_history) - 1)])
 
-    s_arr_3 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 20)
-                         for i in range(len(s_history) - 1)])
-
-    s_arr_4 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 20)
-                         for i in range(len(s_history) - 1)])
+#     tau_pi_bar=1
+#     K=0.1
+#     gamma=0.2
+#     E_b=1
+#     S=0.0001
+#     c=1
+#     r=0.001
+#     m=0
+#     sigma_n=0
     
-    s_arr_5 = np.hstack([np.linspace(s_history[i], s_history[i + 1], 20)
-                         for i in range(len(s_history) - 1)])
-
-    tau_pi_bar=1
-    K=0.1
-    gamma=0.2
-    E_b=1
-    S=0.0001
+    
+    tau_pi_bar=0.9
+    K=0
+    gamma=3000
+    E_b=7500
+    S=0.00025
     c=1
-    r=0.001
-    m=0
+    r=1
+    m=0.01
     sigma_n=0
 
 
     s_arr_1, tau_arr_1, w_arr_1, s_pi_arr_1, s_max_1, tau_max_1, s_pi_cum_1, diss_1, f_1 = get_bond_slip(
         s_arr_1, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
 
-    s_arr_2, tau_arr_2, w_arr_2, s_pi_arr_2, s_max_2, tau_max_2, s_pi_cum_2, diss_2, f_2 = get_bond_slip(
-        s_arr_2, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
-
-    s_arr_3, tau_arr_3, w_arr_3, s_pi_arr_3, s_max_3, tau_max_3, s_pi_cum_3, diss_3, f_3 = get_bond_slip(
-        s_arr_3, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
-
-    s_arr_4, tau_arr_4, w_arr_4, s_pi_arr_4, s_max_4, tau_max_4, s_pi_cum_4, diss_4, f_4 = get_bond_slip(
-        s_arr_4, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
-    
-    s_arr_5, tau_arr_5, w_arr_5, s_pi_arr_5, s_max_5, tau_max_5, s_pi_cum_5, diss_5, f_5 = get_bond_slip(
-        s_arr_5, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
+#     s_arr_2, tau_arr_2, w_arr_2, s_pi_arr_2, s_max_2, tau_max_2, s_pi_cum_2, diss_2, f_2 = get_bond_slip(
+#         s_arr_2, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
+# 
+#     s_arr_3, tau_arr_3, w_arr_3, s_pi_arr_3, s_max_3, tau_max_3, s_pi_cum_3, diss_3, f_3 = get_bond_slip(
+#         s_arr_3, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
+# 
+#     s_arr_4, tau_arr_4, w_arr_4, s_pi_arr_4, s_max_4, tau_max_4, s_pi_cum_4, diss_4, f_4 = get_bond_slip(
+#         s_arr_4, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
+#     
+#     s_arr_5, tau_arr_5, w_arr_5, s_pi_arr_5, s_max_5, tau_max_5, s_pi_cum_5, diss_5, f_5 = get_bond_slip(
+#         s_arr_5, tau_pi_bar=tau_pi_bar, K=K, gamma=gamma, E_b=E_b, S=S, c=c, r=r, m=m, sigma_n=sigma_n)
     
 
     ax1 = plt.subplot(231)
 
-    ax1.plot(s_arr_1, tau_arr_1, 'b', linewidth=2,
+    ax1.plot(s_arr_1, tau_arr_1, 'k', linewidth=2,
              label='$ increments = 10$ ')
-    ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
-             label='$ increments = 20$ ')
-    ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
-             label='$ increments = 30$ ')
-    ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
-             label='$ increments = 40$ ')
-    ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
-             label='$ increments = 50$ ')
+#     ax1.plot(s_arr_2, tau_arr_2, 'r', linewidth=2,
+#              label='$ increments = 20$ ')
+#     ax1.plot(s_arr_3, tau_arr_3, 'g', linewidth=2,
+#              label='$ increments = 30$ ')
+#     ax1.plot(s_arr_4, tau_arr_4, 'k', linewidth=2,
+#              label='$ increments = 40$ ')
+#     ax1.plot(s_arr_5, tau_arr_5, 'y', linewidth=2,
+#              label='$ increments = 50$ ')
 
-    ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
-    ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
-    plt.title('Bond_slip')
-    plt.xlabel('Slip(mm)')
-    plt.ylabel('Stress(MPa)')
-    plt.legend(loc=4)
+    #ax1.axhline(y=0, color='k', linewidth=1, alpha=0.5)
+    #ax1.axvline(x=0, color='k', linewidth=1, alpha=0.5)
+    plt.title('SLIDE_01')
+    plt.xlabel('Slip (mm)')
+    plt.ylabel('Stress (MPa)')
+    #plt.legend(loc=4)
 
     ax2 = plt.subplot(233)
 
     ax2.plot(s_arr_1, w_arr_1, 'b', linewidth=2,
              label='$ increments = 10$ ')
-    ax2.plot(s_arr_2, w_arr_2, 'r', linewidth=2,
-             label='$ increments = 20$ ')
-    ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
-             label='$ increments = 30$ ')
-    ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
-             label='$ increments = 40$ ')
-    ax2.plot(s_arr_5, w_arr_5, 'y', linewidth=2,
-             label='$ increments = 50$ ')
+#     ax2.plot(s_arr_2, w_arr_2, 'r', linewidth=2,
+#              label='$ increments = 20$ ')
+#     ax2.plot(s_arr_3, w_arr_3, 'g', linewidth=2,
+#              label='$ increments = 30$ ')
+#     ax2.plot(s_arr_4, w_arr_4, 'k', linewidth=2,
+#              label='$ increments = 40$ ')
+#     ax2.plot(s_arr_5, w_arr_5, 'y', linewidth=2,
+#              label='$ increments = 50$ ')
     
     ax2.axhline(y=0, color='k', linewidth=1, alpha=0.5)
     ax2.axvline(x=0, color='k', linewidth=1, alpha=0.5)
@@ -241,14 +252,14 @@ if __name__ == '__main__':
     plt.subplot(234)
     plt.plot(s_arr_1, s_pi_cum_1, 'b', linewidth=2,
              label='$ increments = 10$ ')
-    plt.plot(s_arr_2, s_pi_cum_2, 'r', linewidth=2,
-             label='$ increments = 20$ ')
-    plt.plot(s_arr_3, s_pi_cum_3, 'g', linewidth=2,
-             label='$ increments = 30$ ')
-    plt.plot(s_arr_4, s_pi_cum_4,  'k', linewidth=2,
-             label='$ increments = 40$ ')
-    plt.plot(s_arr_5, s_pi_cum_5, 'y', linewidth=2,
-             label='$ increments = 50$ ')
+#     plt.plot(s_arr_2, s_pi_cum_2, 'r', linewidth=2,
+#              label='$ increments = 20$ ')
+#     plt.plot(s_arr_3, s_pi_cum_3, 'g', linewidth=2,
+#              label='$ increments = 30$ ')
+#     plt.plot(s_arr_4, s_pi_cum_4,  'k', linewidth=2,
+#              label='$ increments = 40$ ')
+#     plt.plot(s_arr_5, s_pi_cum_5, 'y', linewidth=2,
+#              label='$ increments = 50$ ')
 
     plt.xlabel('Slip(mm)')
     plt.ylabel('Cumulative sliding(mm)')
@@ -260,14 +271,14 @@ if __name__ == '__main__':
     plt.subplot(235)
     plt.plot(s_arr_1, diss_1, 'b', linewidth=2,
              label='$ increments = 10$ ')
-    plt.plot(s_arr_2, diss_2, 'r', linewidth=2,
-             label='$ increments = 20$ ')
-    plt.plot(s_arr_3, diss_3, 'g', linewidth=2,
-             label='$ increments = 30$ ')
-    plt.plot(s_arr_4, diss_4,  'k', linewidth=2,
-             label='$ increments = 40$ ')
-    plt.plot(s_arr_5, diss_5, 'y', linewidth=2,
-             label='$ increments = 50$ ')
+#     plt.plot(s_arr_2, diss_2, 'r', linewidth=2,
+#              label='$ increments = 20$ ')
+#     plt.plot(s_arr_3, diss_3, 'g', linewidth=2,
+#              label='$ increments = 30$ ')
+#     plt.plot(s_arr_4, diss_4,  'k', linewidth=2,
+#              label='$ increments = 40$ ')
+#     plt.plot(s_arr_5, diss_5, 'y', linewidth=2,
+#              label='$ increments = 50$ ')
 
     plt.xlabel('Slip(mm)')
     plt.ylabel('Energy dissipation')
@@ -278,14 +289,14 @@ if __name__ == '__main__':
     plt.subplot(236)
     plt.plot(s_arr_1, f_1, 'b', linewidth=2,
              label='$ increments = 10$ ')
-    plt.plot(s_arr_2, f_2, 'r', linewidth=2,
-             label='$ increments = 20$ ')
-    plt.plot(s_arr_3, f_3, 'g', linewidth=2,
-             label='$ increments = 30$ ')
-    plt.plot(s_arr_4, f_4,  'k', linewidth=2,
-             label='$ increments = 40$ ')
-    plt.plot(s_arr_5, f_5, 'y', linewidth=2,
-             label='$ increments = 50$ ')
+#     plt.plot(s_arr_2, f_2, 'r', linewidth=2,
+#              label='$ increments = 20$ ')
+#     plt.plot(s_arr_3, f_3, 'g', linewidth=2,
+#              label='$ increments = 30$ ')
+#     plt.plot(s_arr_4, f_4,  'k', linewidth=2,
+#              label='$ increments = 40$ ')
+#     plt.plot(s_arr_5, f_5, 'y', linewidth=2,
+#              label='$ increments = 50$ ')
 
     plt.xlabel('Slip(mm)')
     plt.ylabel('f (threshold) [MPa]')
