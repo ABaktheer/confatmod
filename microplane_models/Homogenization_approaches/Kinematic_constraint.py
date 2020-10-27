@@ -137,6 +137,61 @@ class MATS2DMicroplane(HasTraits):
         MPTT_ijr = self._get__MPTT()
         return einsum('nijr,ij->nr', MPTT_ijr, eps_eng)
     
+    
+    #-------------------------------------------------------------------------
+    '''Kinematic constraint V-D-T split '''
+    #-------------------------------------------------------------------------
+
+
+    # get the dyadic product of the microplane normals
+    _MPVV_1 = Property(depends_on='n_mp')
+
+    @cached_property
+    def _get__MPVV_1(self):
+        # dyadic product of the microplane normals
+        I_ij = identity(2)
+        MPVV_ij = 1/3 * I_ij 
+        return MPVV_ij
+
+    
+    # get the dyadic product of the microplane normals
+    _MPDD_1 = Property(depends_on='n_mp')
+
+    @cached_property
+    def _get__MPDD_1(self):
+        # dyadic product of the microplane normals
+        I_ij = identity(2)
+        MPVV_ij = 1/3 * I_ij 
+        
+        MPNN_nij = einsum('ni,nj->nij', self._MPN, self._MPN)
+        
+        MPDD_ij = einsum('nij->nij', MPNN_nij - MPVV_ij) 
+        
+        return MPDD_ij 
+
+    # get the third order tangential tensor (operator) for each microplane
+    _MPTT_1 = Property(depends_on='n_mp')
+
+    @cached_property
+    def _get__MPTT_1(self):
+        # Third order tangential tensor for each microplane
+        delta = identity(2)
+        MPTT_nijr = 0.5 * (einsum('ni,jr -> nijr', self._MPN, delta) +
+                           einsum('nj,ir -> njir', self._MPN, delta) - 2 *
+                           einsum('ni,nj,nr -> nijr', self._MPN, self._MPN, self._MPN))
+        return MPTT_nijr
+
+    def _get_e_V1_arr(self, eps_eng):
+        return einsum('ij,ij->', self._MPVV_1, eps_eng)
+
+    def _get_e_D1_arr(self, eps_eng):
+        return einsum('nij,ij->n', self._MPDD_1, eps_eng)
+    
+    
+    def _get_e_T1_vct_arr(self, eps_eng):
+        MPTT_ijr = self._get__MPTT_1()
+        return einsum('nijr,ij->nr', MPTT_ijr, eps_eng)
+    
 
     #-------------------------------------------------------------------------
     '''Kinematic constraint V-D split '''
@@ -213,18 +268,22 @@ if __name__ == '__main__':
 
     eps_N_1 = zeros((len(eps_1[:, 0]), n_mp))
     eps_V_1 = zeros((len(eps_1[:, 0]), n_mp))
+    eps_D_1 = zeros((len(eps_1[:, 0]), n_mp))
 
-    eps_T_1 = zeros((len(eps_1[:, 0]), n_mp, 2))
-    eps_D_1 = zeros((len(eps_1[:, 0]), n_mp, 2))
+    eps_TT_1 = zeros((len(eps_1[:, 0]), n_mp, 2))
+    eps_DD_1 = zeros((len(eps_1[:, 0]), n_mp, 2))
 
 
     for i in range(0, len(eps_1[:, 0])):
         
         eps_N_1[i, :] = model._get_e_N_arr(eps_1[i, :])
-        eps_T_1[i, :, :] = model._get_e_T_vct_arr(eps_1[i, :])
+        eps_TT_1[i, :, :] = model._get_e_T_vct_arr(eps_1[i, :])
+        
+        eps_V_1[i, :] = model._get_e_V1_arr(eps_1[i, :])
+        eps_D_1[i, :] = model._get_e_D1_arr(eps_1[i, :])
         
         eps_V_1[i, :] = model._get_e_V_arr(eps_1[i, :])
-        eps_D_1[i, :, :] = model._get_e_D_vct_arr(eps_1[i, :])
+        eps_DD_1[i, :, :] = model._get_e_D_vct_arr(eps_1[i, :])
 
 
 
@@ -256,7 +315,7 @@ if __name__ == '__main__':
     for i in range(0, len(eps_1[:, 0])):
 
         norm = sqrt(
-            einsum('...i,...i->... ', eps_T_1[i, :], eps_T_1[i, :]))
+            einsum('...i,...i->... ', eps_TT_1[i, :], eps_TT_1[i, :]))
 
         plt.polar(rads, norm)
     plt.title('Tangential strain for all microplanes')
@@ -271,6 +330,18 @@ if __name__ == '__main__':
         plt.polar(rads, eps_V_1[i, :])
     plt.title(' Volumetric strain for all microplanes')
     plt.show()
+    
+    
+
+    #===================
+    # Deviatoric strain (V-D-T)
+    #===================
+    plt.subplot(111)
+
+    for i in range(0, len(eps_1[:, 0])):
+        plt.polar(rads, eps_D_1[i, :])
+    plt.title(' Deviatoric (V-D-T) strain for all microplanes')
+    plt.show()
 
     #===================
     # Deviatoric  strain
@@ -279,10 +350,10 @@ if __name__ == '__main__':
     for i in range(0, len(eps_1[:, 0])):
 
         norm = sqrt(
-            einsum('...i,...i->... ', eps_D_1[i, :], eps_D_1[i, :]))
+            einsum('...i,...i->... ', eps_DD_1[i, :], eps_DD_1[i, :]))
 
         plt.polar(rads, norm)
-    plt.title('Deviatoric strain for all microplanes')
+    plt.title('Deviatoric (V-D) strain for all microplanes')
     plt.show()
 
     plt.show()
